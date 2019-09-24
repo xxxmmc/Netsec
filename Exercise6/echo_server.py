@@ -1,6 +1,7 @@
 import asyncio
 import escape_room_004
 import playground
+import gamePackage
 class EchoServer(asyncio.Protocol):
         def __init__(self):
             pass 
@@ -19,9 +20,10 @@ class EchoServer(asyncio.Protocol):
                 print('Data recevied:{!r}'.format(commandline))
                 self.game.command(commandline)
            # data_send = self.game.command(command[0])
-        def data_send(self, data):
-            self.transport.write((data+'<EOL>\n').encode())
+         def send(self, data):
+            GameCommandPacket = gamePackage.GameCommandPacket(command = data)
             print('Data sent:{!r}'.format(data))  
+            self.transport.write(GameCommandPacket.__serialize__())
         async def flyingkey_event(self):
             await asyncio.wait([asyncio.ensure_future(a) for a in self.game.agents]) 
 if __name__ == "__main__":
@@ -37,3 +39,4 @@ if __name__ == "__main__":
 	server.close()
 	loop.run_until_complete(server.wait_close())
 	loop.close()
+

@@ -2,6 +2,7 @@
 Escape Room Core
 """
 import random, sys, asyncio
+
 def create_container_contents(*escape_room_objects):
     return {obj.name: obj for obj in escape_room_objects}
     
@@ -304,45 +305,32 @@ class EscapeRoomGame:
         door.triggers.append(lambda obj, cmd, *args: (cmd == "open") and room["container"].__delitem__(player.name))
         room.triggers.append(lambda obj, cmd, *args: (cmd == "_post_command_") and advance_time(room, clock))
         flyingkey.triggers.append((lambda obj, cmd, *args: (cmd == "hit" and args[0] in obj["smashers"]) and flyingkey_hit_trigger(room, flyingkey, key, self.output)))
-        chest.triggers.append(lambda obj, cmd, *args: (cmd == "open" or cmd == "unlock") and chest.__setitem__("description", create_chest_description(chest))) 
-        # TODO, the chest needs some triggers. Please make the chest
-        # update it's description when it's unlocked and when it's opened.
-        # hint: the function create_chest_description already has the right
-        # text, but it needs to be called at the right time.
+        # TODO, the chest needs some triggers. This is for a later exercise
         
         self.room, self.player = room, player
         self.command_handler = self.command_handler_class(room, player, self.output)
         self.agents.append(self.flyingkey_agent(flyingkey))
         self.status = "created"
         
-    def move_flyingkey(self, flyingkey):
-        locations = ["ceiling","floor","wall"]
-        locations.remove(flyingkey["location"])
-        random.shuffle(locations)
-        next_location = locations.pop(0)
-        old_location = flyingkey["location"]
-        flyingkey["location"] = next_location
-        flyingkey["description"] = create_flyingkey_description(flyingkey)
-        flyingkey["short_description"] = create_flyingkey_short_description(flyingkey)
-        flyingkey["hittable"] = next_location == "wall"
-        self.output("The {} flies from the {} to the {}".format(flyingkey.name, old_location, next_location))
-        for event in self.room.do_trigger("_post_command_"):
-            self.output(event)
-        
     async def flyingkey_agent(self, flyingkey):
-        # this is the part you, the student, fills in.
-        # you will probably need to use:
-        #  - asyncio.sleep (I recommend 5 seconds)
-        #  - self.status, you'll need to stop when no longer playing
-        #  - check if the flyingkey is still flying
-        #  - of course, "move_flyingkey"
-            while( self.status == 'playing' and flyingkey["flying"] == True):
-                self.move_flyingkey(flyingkey)
-                await asyncio.sleep(5)
-
+        random.seed(0) # this should make everyone's random behave the same.
+        await asyncio.sleep(5) # sleep before starting the while loop
+        while self.status == "playing" and flyingkey["flying"]:
+            locations = ["ceiling","floor","wall"]
+            locations.remove(flyingkey["location"])
+            random.shuffle(locations)
+            next_location = locations.pop(0)
+            old_location = flyingkey["location"]
+            flyingkey["location"] = next_location
+            flyingkey["description"] = create_flyingkey_description(flyingkey)
+            flyingkey["short_description"] = create_flyingkey_short_description(flyingkey)
+            flyingkey["hittable"] = next_location == "wall"
+            self.output("The {} flies from the {} to the {}".format(flyingkey.name, old_location, next_location))
+            for event in self.room.do_trigger("_post_command_"):
+                self.output(event)
+            await asyncio.sleep(5)
     
     def start(self):
-        random.seed(0) # this should make everyone's random behave the same.
         self.status = "playing"
         self.output("Where are you? You don't know how you got here... Were you kidnapped? Better take a look around")
         
@@ -361,8 +349,8 @@ class EscapeRoomGame:
                 self.output("You died. Game over!")
                 self.status = "dead"
             elif self.player.name not in self.room["container"]:
-                self.output("VICTORY! You escaped!")
                 self.status = "escaped"
+                self.output("VICTORY! You escaped!")
                 
 def game_next_input(game):
     input = sys.stdin.readline().strip()
