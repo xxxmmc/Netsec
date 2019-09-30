@@ -20,7 +20,7 @@ class EchoClient(asyncio.Protocol):
             #self.deserializer = AutogradeTestStatus.Deserializer()
         #print("m")
         self.transport = transport;
-        packet = autograder_ex6_packets.AutogradeStartTest(name="Yu MAO", email="ymao@jhu.edu", team=5, port=19005)
+        packet = autograder_ex6_packets.AutogradeStartTest(name="Yu MAO", email="ymao@jhu.edu", team=5, port=31000)
         with open("gamePackage.py", "rb") as f:
             packet.packet_file = f.read()
         self.transport.write(packet.__serialize__())
@@ -32,33 +32,36 @@ class EchoClient(asyncio.Protocol):
             d = PacketType.Deserializer()
             d.update(data)
             for gamePacket in d.nextPackets():
-                print("Got {} from server.".format(gamePacket.test_id))
-                print(gamePacket.submit_status)
-                print(gamePacket.client_status)
-                print(gamePacket.server_status)
-                print(gamePacket.error)
-                print(gamePacket.commend)             
-            if self.count < 5:
-                #print("first")
-                GameCommandPacket = gamePackage.GameCommandPacket.create_game_command_packet(self.good_list[self.count])
-                self.transport.write(GameCommandPacket.__serialize__())
-                #print(GameCommandPacket)
-                #print("second")
-                time.sleep(0.25)
-                self.count += 1
-            elif self.count == 5 and data.decode().split()[-1] == 'wall<EOL>':
-                send("hit flyingkey with hammer")
-                self.count += 1;
-                #print("good")
-                time.sleep(0.25)
-            elif self.count > 5:
-                if self.count2 < 4:
-                    send(self.good_list2[self.count2])
-                    self.count2 += 1
+                if isinstance(gamePacket,autograder_ex6_packets.AutogradeTestStatus):
+                    print("Got {} from server.".format(gamePacket.test_id))
+                    print(gamePacket.submit_status)
+                    print(gamePacket.client_status)
+                    print(gamePacket.server_status)
+                    print(gamePacket.error) 
+                if isinstance(gamePacket,gamePackage.GameResponsePacket):                
+                    print(gamePacket.response())
+                    if self.count < 5:
+                        print("first")
+                        gameCommandPacket = gamePackage.GameCommandPacket.create_game_command_packet(self.good_list[self.count])
+                        print(gameCommandPacket.command())
+                        self.transport.write(gameCommandPacket.__serialize__())
+                        self.count += 1
+                        print(self.count)
+                        time.sleep(0.25)
+                    elif self.count == 5 and gamePacket.response().split()[-1] == 'wall':
+                        gameCommandPacket = gamePackage.GameCommandPacket.create_game_command_packet("hit flyingkey with hammer")
+                        self.transport.write(gameCommandPacket.__serialize__())
+                        self.count += 1;
+                        time.sleep(0.25)
+                    elif self.count > 5:
+                        if self.count2 < 4:
+                            gameCommandPacket = gamePackage.GameCommandPacket.create_game_command_packet(self.good_list2[self.count2])
+                            self.transport.write(gameCommandPacket.__serialize__())
+                            self.count2 += 1
     def sendAutogradedata(self):
             #self.Autogradedata = autograder_exi6_packets.AutogradeStartTest(name = None,team = None,email = None,port = None,packet_file = b"")
             #print("qwe")
-            packet = AutogradeStartTest(name="Yu Mao", email="ymao@jhu.edu", team=5, port=19005)
+            packet = AutogradeStartTest(name="Yu Mao", email="ymao@jhu.edu", team=5, port=22000)
             with open("my_packet_file.py", "rb") as f:
                 packet.packet_file = f.read()
             self.transport.write(packet.__serialize__())
@@ -70,7 +73,7 @@ class EchoClient(asyncio.Protocol):
 if __name__ == "__main__":
         loop = asyncio.get_event_loop()
         loop.set_debug(enabled=True)
-        EnablePresetLogging(PRESET_DEBUG)
+        #EnablePresetLogging(PRESET_DEBUG)
         coro = playground.create_connection(EchoClient,'20194.0.0.19000',19006)
         client = loop.run_until_complete(coro)
         try:
@@ -80,4 +83,5 @@ if __name__ == "__main__":
         client.close()
         loop.run_until_complete(client.close())
         loop.close()
+
 

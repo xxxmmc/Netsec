@@ -6,16 +6,16 @@ class GameCommandPacket(PacketType):
     DEFINITION_VERSION = "1.0"# whatever you want
 
     FIELDS = [
-        ("command",STRING)# whatever you want here
+        ("comd",STRING)# whatever you want here
     ]
 
     @classmethod
     def create_game_command_packet(cls, s):
-        return cls(command = s)# whatever arguments needed to construct the packet)
+        return cls(comd = s)# whatever arguments needed to construct the packet)
     
     def command(self):
         # MUST RETURN A STRING!
-        return self.command# whatever you need to get the command for the game.
+        return self.comd# whatever you need to get the command for the game.
     
 class GameResponsePacket(PacketType):
     DEFINITION_IDENTIFIER = "testGameResponcePacket"# whatever you want
