@@ -27,7 +27,7 @@ class EchoServer(asyncio.Protocol):
                     print("1")
                     print(process_game_init(gamePacket))
                     print("Game started")
-                    gameRequirePacket = create_game_require_pay_packet('123456',"wbai3_account",5)
+                    gameRequirePacket = create_game_require_pay_packet('9821389123',"ymao22_account",5)
                     self.transport.write(gameRequirePacket.__serialize__())
                     print("Game started new")
                 elif isinstance(gamePacket,gamePackage.GamePayPacket):
@@ -52,7 +52,7 @@ if __name__ == "__main__":
         loop = asyncio.get_event_loop()
         loop.set_debug(enabled=True)
         EnablePresetLogging(PRESET_DEBUG)
-        coro = playground.create_server(EchoServer,'localhost',31014)
+        coro = playground.create_server(EchoServer,'localhost',8989)
         server = loop.run_until_complete(coro)
          
         try:

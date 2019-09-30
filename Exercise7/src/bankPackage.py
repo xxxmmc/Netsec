@@ -8,7 +8,7 @@ bankconfig = OnlineBankConfig()
 bank_addr = "20194.0.0.19000"
 bank_port = 777
 bank_stack = "default"
-bank_username = "wbai3"
+bank_username = "ymao22"
 certPath = "/home/student_20194/YU_MAO/20194_online_bank.cert"
 bank_cert = loadCertFromFile(certPath)
 

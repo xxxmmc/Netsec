@@ -22,7 +22,7 @@ class EchoClient(asyncio.Protocol):
             #self.deserializer = AutogradeTestStatus.Deserializer()
         #print("m")
         self.transport = transport;
-        packet = autograder_ex6_packets.AutogradeStartTest(name="Yu MAO", email="ymao@jhu.edu", team=5, port=31014)
+        packet = autograder_ex6_packets.AutogradeStartTest(name="YU MAO", email="ymao@jhu.edu", team=5, port=8989)
         with open("gamePackage.py", "rb") as f:
             packet.packet_file = f.read()
         self.transport.write(packet.__serialize__())
@@ -87,7 +87,7 @@ class EchoClient(asyncio.Protocol):
             #print(GameCommandPacket)
             self.transport.write(GameCommandPacket.__serialize__())
     async def Create_Payment(self, account, amount, unique_id):
-        result = await Payment_Init("wbai3_account", account, amount, unique_id)
+        result = await Payment_Init("ymao22_account", account, amount, unique_id)
         print(result)
     
         receipt, receipt_sig = result
