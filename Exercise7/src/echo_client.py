@@ -16,17 +16,19 @@ class EchoClient(asyncio.Protocol):
             self.flag = 0;
             self.hitflag = 0;
             self.count2 = 0;
+            self.loop = asyncio.get_event_loop()
            # EnablePresetLogging(PRESET_DEBUG)
     def connection_made(self, transport):
             #self.deserializer = AutogradeTestStatus.Deserializer()
         #print("m")
         self.transport = transport;
-        packet = autograder_ex6_packets.AutogradeStartTest(name="Yu MAO", email="ymao@jhu.edu", team=5, port=31000)
+        packet = autograder_ex6_packets.AutogradeStartTest(name="Yu MAO", email="ymao@jhu.edu", team=5, port=31014)
         with open("gamePackage.py", "rb") as f:
             packet.packet_file = f.read()
         self.transport.write(packet.__serialize__())
         #print("good")
-        
+        self.command_packet = GameCommandPacket.create_game_command_packet("Submit")
+        self.transport.write(self.command_packet.__serialize__())
     def data_received(self, data):
             #print("mmy")
             #print("mmy")
@@ -38,20 +40,19 @@ class EchoClient(asyncio.Protocol):
                     print(gamePacket.submit_status)
                     print(gamePacket.client_status)
                     print(gamePacket.server_status)
-                    print(gamePacket.error) 
-                
-                    self.command_packet = gamePackage.GameCommandPacket.create_game_command_packet("Submit")
-                    self.transport.write(self.command_packet.__serialize__())
+                    print(gamePacket.error)  
                     print("good")
-                elif isinstance(gamepacket,gamePackage.GameRequirePayPacket):
-                    unique_id, account, amount = process_game_require_pay_packet(gamePacket)
+                elif isinstance(gamePacket,gamePackage.GameRequirePayPacket):
+                    print(gamePacket.amountnum)
+                    unique_id, account, amount = gamePackage.process_game_require_pay_packet(gamePacket)
                     print(unique_id)
                     print(account)
                     print(amount)
-                    self.loop.create_task(self.CreatePayment(account, amount, unique_id))
-                elif isinstance(gamePacket,gamePackage.GameResponsePacket):                
-
+                    self.loop.create_task(self.Create_Payment(account, amount, unique_id))
+                    print("endloop")
+                elif isinstance(gamePacket,gamePackage.GameResponsePacket):
                     print(gamePacket.resp)
+                    print("this is a recep")
                     if self.count < 5:
                         print("first")
                         gameCommandPacket = gamePackage.GameCommandPacket.create_game_command_packet(self.good_list[self.count])
@@ -77,7 +78,7 @@ class EchoClient(asyncio.Protocol):
     def sendAutogradedata(self):
             #self.Autogradedata = autograder_exi6_packets.AutogradeStartTest(name = None,team = None,email = None,port = None,packet_file = b"")
             #print("qwe")
-            packet = AutogradeStartTest(name="Yu Mao", email="ymao@jhu.edu", team=5, port=22000)
+            packet = AutogradeStartTest(name="Yu Mao", email="ymao@jhu.edu", team=5, port=21000)
             with open("my_packet_file.py", "rb") as f:
                 packet.packet_file = f.read()
             self.transport.write(packet.__serialize__())
@@ -86,15 +87,17 @@ class EchoClient(asyncio.Protocol):
             #print(GameCommandPacket)
             self.transport.write(GameCommandPacket.__serialize__())
     async def Create_Payment(self, account, amount, unique_id):
-        result = await Payment_Init("tfeng7_account", account, amount, unique_id)
+        result = await Payment_Init("wbai3_account", account, amount, unique_id)
         print(result)
+    
         receipt, receipt_sig = result
         game_packet = create_game_pay_packet(receipt, receipt_sig)
         self.transport.write(game_packet.__serialize__())
+        print("newnewnew")
 if __name__ == "__main__":
         loop = asyncio.get_event_loop()
         loop.set_debug(enabled=True)
-        #EnablePresetLogging(PRESET_DEBUG)
+        EnablePresetLogging(PRESET_DEBUG)
         coro = playground.create_connection(EchoClient,'20194.0.0.19000',19007)
         client = loop.run_until_complete(coro)
         try:

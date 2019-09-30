@@ -1,27 +1,29 @@
 from CipherUtil import loadCertFromFile
 from BankCore import LedgerLineStorage, LedgerLine
 from OnlineBank import BankClientProtocol, OnlineBankConfig
-import playground, time
-import getpass, os, asyncio
+from playground.common.logging import EnablePresetLogging, PRESET_DEBUG #EnablePresetLogging(PRESET_DEBUG)
+import playground
+import getpass, sys, os, asyncio
 
 bankconfig = OnlineBankConfig()
-bank_addr = "20194.0.0.19000"
-bank_port = 777
-bank_stack = "default"
-bank_username = "weihengbai"
-certPath = "/home/student_20194/YU_MAO/20194_online_bank.cert"
+bank_addr =     bankconfig.get_parameter("CLIENT", "bank_addr")
+bank_port = int(bankconfig.get_parameter("CLIENT", "bank_port"))
+bank_stack     =     bankconfig.get_parameter("CLIENT", "stack","default")
+bank_username  =     bankconfig.get_parameter("CLIENT", "username")
+
+certPath = os.path.join(bankconfig.path(), "bank.cert")
 bank_cert = loadCertFromFile(certPath)
 
 
 async def example_transfer(bank_client, src, dst, amount, memo):
     await playground.create_connection(
-        lambda: bank_client,
-        bank_addr,
-        bank_port,
-        family='default'
-    )
+            lambda: bank_client,
+            bank_addr,
+            bank_port,
+            family='default'
+        )
     print("Connected. Logging in.")
-
+        
     try:
         await bank_client.loginToServer()
     except Exception as e:
@@ -31,18 +33,19 @@ async def example_transfer(bank_client, src, dst, amount, memo):
     try:
         await bank_client.switchAccount(src)
     except Exception as e:
-        print("Could not set source account as {} because {}".format(src,e))
+        print("Could not set source account as {} because {}".format(
+            src,
+            e))
         return False
-
+    
     try:
         result = await bank_client.transfer(dst, amount, memo)
     except Exception as e:
         print("Could not transfer because {}".format(e))
         return False
-
+        
     return result
-
-
+    
 def example_verify(bank_client, receipt_bytes, signature_bytes, dst, amount, memo):
     if not bank_client.verify(receipt_bytes, signature_bytes):
         raise Exception("Bad receipt. Not correctly signed by bank")
@@ -53,29 +56,17 @@ def example_verify(bank_client, receipt_bytes, signature_bytes, dst, amount, mem
         raise Exception("Invalid memo. Expected {} got {}".format(memo, ledger_line.memo()))
     return True
     
-async def Payment_Init(src, dst, amount, memo):
-    amount = int(amount)
-    username = bank_username  # could override at the command line
-    password = getpass.getpass("Enter password for {}: ".format(username))
-    bank_client = BankClientProtocol(bank_cert, username, password)
-    result = await example_transfer(bank_client, src, dst, amount, memo)
-
-    if result:
-        example_verify(bank_client, result.Receipt, result.ReceiptSignature, dst, amount, memo)
-        print("Receipt verified.")
-        return result.Receipt, result.ReceiptSignature    
-    
-    
 if __name__=="__main__":
     src, dst, amount, memo = sys.argv[1:5]
+    print(bank_addr)
     amount = int(amount)
     username = bank_username # could override at the command line
     password = getpass.getpass("Enter password for {}: ".format(username))
     bank_client = BankClientProtocol(bank_cert, username, password) 
     loop = asyncio.get_event_loop()
+    loop.set_debug(enabled=True)
     result = loop.run_until_complete(
         example_transfer(bank_client, src, dst, amount, memo))
     if result:
         example_verify(bank_client, result.Receipt, result.ReceiptSignature, dst, amount, memo)
         print("Receipt verified.")
-

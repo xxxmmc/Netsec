@@ -24,8 +24,8 @@ class GamePayPacket(PacketType):
     DEFINITION_VERSION = "1.0"# whatever you want
 
     FIELDS = [
-        ("recpt",STRING),# whatever you want here
-        ("recpt_sig",STRING),
+        ("recpt",BUFFER),# whatever you want here
+        ("recpt_sig",BUFFER),
     ]
 
 class GameCommandPacket(PacketType):
@@ -72,10 +72,12 @@ def create_game_init_packet(username):
 def process_game_init(pkt):
         return "test7"
 def create_game_require_pay_packet(unique_id, account, amount):
+        #print("new")
         return GameRequirePayPacket(id = unique_id, accountname = account, amountnum = amount)# whatever you need to construct the packet
 def process_game_require_pay_packet(pkt):
         # MUST RETURN A STRING!
-        return pkt.id,pkt.accountname,pkt.amount# whatever you need to get the command for the game.
+        #print("new")
+        return pkt.id,pkt.accountname,pkt.amountnum# whatever you need to get the command for the game.
 def create_game_pay_packet(receipt, receipt_signature):
         # whatever arguments needed to construct the packet)
         return GamePayPacket(recpt = receipt, recpt_sig = receipt_signature)# whatever you need to construct the packet
