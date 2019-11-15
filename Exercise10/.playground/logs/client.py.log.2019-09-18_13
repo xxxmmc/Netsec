@@ -1,0 +1,126 @@
+2019-09-18 12:26:29,799 - playground.network.devices.vnic.connect - INFO - Create playground connection to 20194.0.0.19000:19005
+2019-09-18 12:26:29,801 - playground.network.devices.vnic.connect - INFO - No control conenction to VNIC ('127.0.0.1', 43721) yet. Connecting
+2019-09-18 12:26:29,808 - playground.network.protocols.vsockets - INFO - <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7fc5067787f0> setting transport <_SelectorSocketTransport fd=8 read=idle write=<idle, bufsize=0>>
+2019-09-18 12:26:29,810 - playground.network.devices.vnic.connect - INFO - Control protocol connected. (<_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>, <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7fc5067787f0>)
+2019-09-18 12:26:29,811 - playground.network.devices.vnic.connect - DEBUG - Ready to proceed for ('127.0.0.1', 43721)
+2019-09-18 12:26:29,812 - playground.network.protocols.vsockets - DEBUG - Requesting connect to 20194.0.0.19000:19005 from vnic (connection ID 1)
+2019-09-18 12:26:29,820 - playground.network.devices.vnic.connect - DEBUG - Awaiting outbound connection to complete
+2019-09-18 12:26:29,821 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7fc506778828> Deserialize stream at position 0/70
+2019-09-18 12:26:29,823 - playground.network.packet.PacketType - DEBUG - Deserialized message vsockets.VNICSocketOpenResponsePacket v1.0 (7fc506633eb8). 0/0 bytes available/total
+2019-09-18 12:26:29,824 - playground.network.protocols.vsockets - DEBUG - Open callback for connection 1. Failure? False
+2019-09-18 12:26:29,825 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7fc506778828> Deserialize stream at position 0/0
+2019-09-18 12:26:29,829 - playground.network.devices.vnic.connect - DEBUG - Callback service new data connection on tcp port 57296
+2019-09-18 12:26:29,835 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7fc506778828> Deserialize stream at position 0/111
+2019-09-18 12:26:29,837 - playground.network.packet.PacketType - DEBUG - Deserialized message vsockets.VNICConnectionSpawnedPacket v1.0 (7fc5065c8160). 0/0 bytes available/total
+2019-09-18 12:26:29,838 - playground.network.protocols.vsockets - INFO - Connect 1 callback 20194.5.1.1:2008 -> 20194.0.0.19000:19005
+2019-09-18 12:26:29,839 - playground.network.devices.vnic.connect - DEBUG - Callback service setting up callback for connectionID 1, spawn port 57296
+2019-09-18 12:26:29,840 - playground.network.devices.vnic.connect - DEBUG - Connection made on spawned port 57296 for stack [None,<__main__.EchoClient object at 0x7fc506633cc0>] 20194.5.1.1:2008 -> 20194.0.0.19000:19005
+2019-09-18 12:26:29,841 - playground.network.protocols.vsockets - DEBUG - Creating tranport for higher protocol <__main__.EchoClient object at 0x7fc506633cc0> with spawnport 57296
+2019-09-18 12:26:29,848 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7fc506778828> Deserialize stream at position 0/0
+2019-09-18 12:26:29,853 - playground.network.devices.vnic.connect - DEBUG - Connection complete. Outbound port is 2008 for connection 1
+2019-09-18 12:26:29,854 - playground.network.devices.vnic.connect - DEBUG - Complete playground connection. Total Time: 0.05516767501831055 (Control 0.012938261032104492, callback 0.042229413986206055)
+2019-09-18 13:00:59,936 - playground.network.devices.vnic.connect - INFO - Create playground connection to 20194.0.0.19000:19005
+2019-09-18 13:00:59,938 - playground.network.devices.vnic.connect - INFO - No control conenction to VNIC ('127.0.0.1', 43721) yet. Connecting
+2019-09-18 13:00:59,945 - playground.network.protocols.vsockets - INFO - <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7fbf63aab7f0> setting transport <_SelectorSocketTransport fd=8 read=idle write=<idle, bufsize=0>>
+2019-09-18 13:00:59,946 - playground.network.devices.vnic.connect - INFO - Control protocol connected. (<_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>, <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7fbf63aab7f0>)
+2019-09-18 13:00:59,949 - playground.network.devices.vnic.connect - DEBUG - Ready to proceed for ('127.0.0.1', 43721)
+2019-09-18 13:00:59,950 - playground.network.protocols.vsockets - DEBUG - Requesting connect to 20194.0.0.19000:19005 from vnic (connection ID 1)
+2019-09-18 13:00:59,952 - playground.network.devices.vnic.connect - DEBUG - Awaiting outbound connection to complete
+2019-09-18 13:00:59,959 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7fbf63aab828> Deserialize stream at position 0/70
+2019-09-18 13:00:59,960 - playground.network.packet.PacketType - DEBUG - Deserialized message vsockets.VNICSocketOpenResponsePacket v1.0 (7fbf63966e80). 0/0 bytes available/total
+2019-09-18 13:00:59,960 - playground.network.protocols.vsockets - DEBUG - Open callback for connection 1. Failure? False
+2019-09-18 13:00:59,963 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7fbf63aab828> Deserialize stream at position 0/0
+2019-09-18 13:00:59,968 - playground.network.devices.vnic.connect - DEBUG - Callback service new data connection on tcp port 56002
+2019-09-18 13:00:59,974 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7fbf63aab828> Deserialize stream at position 0/111
+2019-09-18 13:00:59,975 - playground.network.packet.PacketType - DEBUG - Deserialized message vsockets.VNICConnectionSpawnedPacket v1.0 (7fbf638fb128). 0/0 bytes available/total
+2019-09-18 13:00:59,976 - playground.network.protocols.vsockets - INFO - Connect 1 callback 20194.5.1.1:2009 -> 20194.0.0.19000:19005
+2019-09-18 13:00:59,977 - playground.network.devices.vnic.connect - DEBUG - Callback service setting up callback for connectionID 1, spawn port 56002
+2019-09-18 13:00:59,978 - playground.network.devices.vnic.connect - DEBUG - Connection made on spawned port 56002 for stack [None,<__main__.EchoClient object at 0x7fbf63966c88>] 20194.5.1.1:2009 -> 20194.0.0.19000:19005
+2019-09-18 13:00:59,979 - playground.network.protocols.vsockets - DEBUG - Creating tranport for higher protocol <__main__.EchoClient object at 0x7fbf63966c88> with spawnport 56002
+2019-09-18 13:00:59,981 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7fbf63aab828> Deserialize stream at position 0/0
+2019-09-18 13:00:59,989 - playground.network.devices.vnic.connect - DEBUG - Connection complete. Outbound port is 2009 for connection 1
+2019-09-18 13:00:59,990 - playground.network.devices.vnic.connect - DEBUG - Complete playground connection. Total Time: 0.054515838623046875 (Control 0.014033079147338867, callback 0.04048275947570801)
+2019-09-18 13:02:05,033 - playground.network.devices.vnic.connect - INFO - Create playground connection to 20194.0.0.19000:19005
+2019-09-18 13:02:05,035 - playground.network.devices.vnic.connect - INFO - No control conenction to VNIC ('127.0.0.1', 43721) yet. Connecting
+2019-09-18 13:02:05,041 - playground.network.protocols.vsockets - INFO - <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f6e75a60828> setting transport <_SelectorSocketTransport fd=8 read=idle write=<idle, bufsize=0>>
+2019-09-18 13:02:05,044 - playground.network.devices.vnic.connect - INFO - Control protocol connected. (<_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>, <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f6e75a60828>)
+2019-09-18 13:02:05,045 - playground.network.devices.vnic.connect - DEBUG - Ready to proceed for ('127.0.0.1', 43721)
+2019-09-18 13:02:05,046 - playground.network.protocols.vsockets - DEBUG - Requesting connect to 20194.0.0.19000:19005 from vnic (connection ID 1)
+2019-09-18 13:02:05,052 - playground.network.devices.vnic.connect - DEBUG - Awaiting outbound connection to complete
+2019-09-18 13:02:05,055 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f6e75a60860> Deserialize stream at position 0/70
+2019-09-18 13:02:05,056 - playground.network.packet.PacketType - DEBUG - Deserialized message vsockets.VNICSocketOpenResponsePacket v1.0 (7f6e7591aef0). 0/0 bytes available/total
+2019-09-18 13:02:05,057 - playground.network.protocols.vsockets - DEBUG - Open callback for connection 1. Failure? False
+2019-09-18 13:02:05,057 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f6e75a60860> Deserialize stream at position 0/0
+2019-09-18 13:02:05,061 - playground.network.devices.vnic.connect - DEBUG - Callback service new data connection on tcp port 44372
+2019-09-18 13:02:05,067 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f6e75a60860> Deserialize stream at position 0/111
+2019-09-18 13:02:05,069 - playground.network.packet.PacketType - DEBUG - Deserialized message vsockets.VNICConnectionSpawnedPacket v1.0 (7f6e758af198). 0/0 bytes available/total
+2019-09-18 13:02:05,069 - playground.network.protocols.vsockets - INFO - Connect 1 callback 20194.5.1.1:2010 -> 20194.0.0.19000:19005
+2019-09-18 13:02:05,069 - playground.network.devices.vnic.connect - DEBUG - Callback service setting up callback for connectionID 1, spawn port 44372
+2019-09-18 13:02:05,070 - playground.network.devices.vnic.connect - DEBUG - Connection made on spawned port 44372 for stack [None,<__main__.EchoClient object at 0x7f6e7591acf8>] 20194.5.1.1:2010 -> 20194.0.0.19000:19005
+2019-09-18 13:02:05,070 - playground.network.protocols.vsockets - DEBUG - Creating tranport for higher protocol <__main__.EchoClient object at 0x7f6e7591acf8> with spawnport 44372
+2019-09-18 13:02:05,070 - asyncio - ERROR - Exception in callback _SelectorSocketTransport._read_ready()
+handle: <Handle _SelectorSocketTransport._read_ready()>
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/asyncio/events.py", line 145, in _run
+    self._callback(*self._args)
+  File "/usr/lib/python3.6/asyncio/selector_events.py", line 721, in _read_ready
+    self._protocol.data_received(data)
+  File "/home/student_20194/netsec_env/Playground3/src/playground/network/protocols/vsockets.py", line 352, in data_received
+    packet.destination, packet.destinationPort)
+  File "/home/student_20194/netsec_env/Playground3/src/playground/network/devices/vnic/connect.py", line 97, in completeCallback
+    self.tryToBuildStack(spawnTcpPort)
+  File "/home/student_20194/netsec_env/Playground3/src/playground/network/devices/vnic/connect.py", line 87, in tryToBuildStack
+    self.buildStack(stackFactory, spawnTcpPort)
+  File "/home/student_20194/netsec_env/Playground3/src/playground/network/devices/vnic/connect.py", line 114, in buildStack
+    destination, destinationPort)
+  File "/home/student_20194/netsec_env/Playground3/src/playground/network/protocols/vsockets.py", line 386, in setPlaygroundConnectionInfo
+    self.higherProtocol().connection_made(nextTransport)
+  File "/home/student_20194/netsec_env/Playground3/src/playground/network/common/Protocol.py", line 167, in <lambda>
+    *args, **kargs)
+  File "/home/student_20194/netsec_env/Playground3/src/playground/network/common/Protocol.py", line 145, in protocolEvent
+    r = protocolMethod(*args, **kargs)
+  File "client.py", line 8, in connection_made
+    sleep(2)
+NameError: name 'sleep' is not defined
+2019-09-18 13:02:22,424 - playground.network.devices.vnic.connect - INFO - Create playground connection to 20194.0.0.19000:19005
+2019-09-18 13:02:22,426 - playground.network.devices.vnic.connect - INFO - No control conenction to VNIC ('127.0.0.1', 43721) yet. Connecting
+2019-09-18 13:02:22,433 - playground.network.protocols.vsockets - INFO - <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f03f1e70828> setting transport <_SelectorSocketTransport fd=8 read=idle write=<idle, bufsize=0>>
+2019-09-18 13:02:22,435 - playground.network.devices.vnic.connect - INFO - Control protocol connected. (<_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>, <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f03f1e70828>)
+2019-09-18 13:02:22,436 - playground.network.devices.vnic.connect - DEBUG - Ready to proceed for ('127.0.0.1', 43721)
+2019-09-18 13:02:22,437 - playground.network.protocols.vsockets - DEBUG - Requesting connect to 20194.0.0.19000:19005 from vnic (connection ID 1)
+2019-09-18 13:02:22,444 - playground.network.devices.vnic.connect - DEBUG - Awaiting outbound connection to complete
+2019-09-18 13:02:22,446 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f03f1e70860> Deserialize stream at position 0/70
+2019-09-18 13:02:22,448 - playground.network.packet.PacketType - DEBUG - Deserialized message vsockets.VNICSocketOpenResponsePacket v1.0 (7f03f1d2aef0). 0/0 bytes available/total
+2019-09-18 13:02:22,449 - playground.network.protocols.vsockets - DEBUG - Open callback for connection 1. Failure? False
+2019-09-18 13:02:22,457 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f03f1e70860> Deserialize stream at position 0/0
+2019-09-18 13:02:22,458 - playground.network.devices.vnic.connect - DEBUG - Callback service new data connection on tcp port 56456
+2019-09-18 13:02:22,462 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f03f1e70860> Deserialize stream at position 0/111
+2019-09-18 13:02:22,463 - playground.network.packet.PacketType - DEBUG - Deserialized message vsockets.VNICConnectionSpawnedPacket v1.0 (7f03f1cbf198). 0/0 bytes available/total
+2019-09-18 13:02:22,463 - playground.network.protocols.vsockets - INFO - Connect 1 callback 20194.5.1.1:2011 -> 20194.0.0.19000:19005
+2019-09-18 13:02:22,463 - playground.network.devices.vnic.connect - DEBUG - Callback service setting up callback for connectionID 1, spawn port 56456
+2019-09-18 13:02:22,464 - playground.network.devices.vnic.connect - DEBUG - Connection made on spawned port 56456 for stack [None,<__main__.EchoClient object at 0x7f03f1d2acf8>] 20194.5.1.1:2011 -> 20194.0.0.19000:19005
+2019-09-18 13:02:22,464 - playground.network.protocols.vsockets - DEBUG - Creating tranport for higher protocol <__main__.EchoClient object at 0x7f03f1d2acf8> with spawnport 56456
+2019-09-18 13:02:24,469 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f03f1e70860> Deserialize stream at position 0/0
+2019-09-18 13:02:24,477 - playground.network.devices.vnic.connect - DEBUG - Connection complete. Outbound port is 2011 for connection 1
+2019-09-18 13:02:24,478 - playground.network.devices.vnic.connect - DEBUG - Complete playground connection. Total Time: 2.05448842048645 (Control 0.01347208023071289, callback 2.0410163402557373)
+2019-09-18 13:03:54,367 - playground.network.devices.vnic.connect - INFO - Create playground connection to 20194.0.0.19000:19005
+2019-09-18 13:03:54,370 - playground.network.devices.vnic.connect - INFO - No control conenction to VNIC ('127.0.0.1', 43721) yet. Connecting
+2019-09-18 13:03:54,379 - playground.network.protocols.vsockets - INFO - <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f3a8ac69ba8> setting transport <_SelectorSocketTransport fd=8 read=idle write=<idle, bufsize=0>>
+2019-09-18 13:03:54,381 - playground.network.devices.vnic.connect - INFO - Control protocol connected. (<_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>, <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f3a8ac69ba8>)
+2019-09-18 13:03:54,382 - playground.network.devices.vnic.connect - DEBUG - Ready to proceed for ('127.0.0.1', 43721)
+2019-09-18 13:03:54,383 - playground.network.protocols.vsockets - DEBUG - Requesting connect to 20194.0.0.19000:19005 from vnic (connection ID 1)
+2019-09-18 13:03:54,391 - playground.network.devices.vnic.connect - DEBUG - Awaiting outbound connection to complete
+2019-09-18 13:03:54,395 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f3a8ab41588> Deserialize stream at position 0/70
+2019-09-18 13:03:54,396 - playground.network.packet.PacketType - DEBUG - Deserialized message vsockets.VNICSocketOpenResponsePacket v1.0 (7f3a8ab1efd0). 0/0 bytes available/total
+2019-09-18 13:03:54,396 - playground.network.protocols.vsockets - DEBUG - Open callback for connection 1. Failure? False
+2019-09-18 13:03:54,397 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f3a8ab41588> Deserialize stream at position 0/0
+2019-09-18 13:03:54,401 - playground.network.devices.vnic.connect - DEBUG - Callback service new data connection on tcp port 54768
+2019-09-18 13:03:54,407 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f3a8ab41588> Deserialize stream at position 0/111
+2019-09-18 13:03:54,408 - playground.network.packet.PacketType - DEBUG - Deserialized message vsockets.VNICConnectionSpawnedPacket v1.0 (7f3a8ab3a080). 0/0 bytes available/total
+2019-09-18 13:03:54,408 - playground.network.protocols.vsockets - INFO - Connect 1 callback 20194.5.1.1:2012 -> 20194.0.0.19000:19005
+2019-09-18 13:03:54,409 - playground.network.devices.vnic.connect - DEBUG - Callback service setting up callback for connectionID 1, spawn port 54768
+2019-09-18 13:03:54,411 - playground.network.devices.vnic.connect - DEBUG - Connection made on spawned port 54768 for stack [None,<__main__.EchoClient object at 0x7f3a8ab1ecc0>] 20194.5.1.1:2012 -> 20194.0.0.19000:19005
+2019-09-18 13:03:54,412 - playground.network.protocols.vsockets - DEBUG - Creating tranport for higher protocol <__main__.EchoClient object at 0x7f3a8ab1ecc0> with spawnport 54768
+2019-09-18 13:03:56,416 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f3a8ab41588> Deserialize stream at position 0/0
+2019-09-18 13:03:56,416 - playground.network.devices.vnic.connect - DEBUG - Connection complete. Outbound port is 2012 for connection 1
+2019-09-18 13:03:56,417 - playground.network.devices.vnic.connect - DEBUG - Complete playground connection. Total Time: 2.0494656562805176 (Control 0.015697717666625977, callback 2.0337679386138916)
