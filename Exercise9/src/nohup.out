@@ -1,0 +1,120 @@
+2019-10-05 17:08:43,889 - asyncio - INFO - <Server sockets=[<socket.socket fd=7, family=AddressFamily.AF_INET, type=2049, proto=6, laddr=('127.0.0.1', 37167)>]> is serving
+2019-10-05 17:08:43,891 - playground.network.devices.vnic.connect - INFO - vnic connections {}
+2019-10-05 17:08:43,891 - playground.network.devices.vnic.connect - INFO - No control conenction to VNIC ('127.0.0.1', 40783) yet. Connecting
+2019-10-05 17:08:43,892 - asyncio - DEBUG - connect <socket.socket fd=8, family=AddressFamily.AF_INET, type=2049, proto=6, laddr=('0.0.0.0', 0)> to ('127.0.0.1', 40783)
+2019-10-05 17:08:43,898 - asyncio - DEBUG - poll took 0.021 ms: 1 events
+2019-10-05 17:08:43,901 - playground.network.protocols.vsockets - INFO - <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f150a72e668> setting transport <_SelectorSocketTransport fd=8 read=idle write=<idle, bufsize=0>>
+2019-10-05 17:08:43,901 - asyncio - DEBUG - <socket.socket fd=8, family=AddressFamily.AF_INET, type=2049, proto=6, laddr=('127.0.0.1', 54014), raddr=('127.0.0.1', 40783)> connected to 127.0.0.1:40783: (<_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>, <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f150a72e668>)
+2019-10-05 17:08:43,902 - playground.network.devices.vnic.connect - INFO - Control protocol connected. res=(<_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>, <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f150a72e668>)
+2019-10-05 17:08:43,902 - playground.network.devices.vnic.connect - DEBUG - Ready to proceed for ('127.0.0.1', 40783)
+2019-10-05 17:08:43,902 - playground.network.devices.vnic.connect - INFO - For vnic my_nic, location ('127.0.0.1', 40783), got controlProtocol <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f150a72e668>, transport <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+2019-10-05 17:08:43,903 - playground.network.protocols.vsockets - DEBUG - Requesting listenting socket on port 21012 from vnic (connection ID 1)
+2019-10-05 17:08:43,903 - playground.network.protocols.vsockets - INFO - Listen in <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f150a72e668>. Has transport <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>. For port 21012
+2019-10-05 17:08:43,909 - playground.network.devices.vnic.connect - DEBUG - Awaiting listening to port 21012 to complete
+2019-10-05 17:08:43,912 - asyncio - DEBUG - poll 29999.767 ms took 2.072 ms: 1 events
+2019-10-05 17:08:43,912 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f150a6c04a8> Deserialize stream at position 0/98
+2019-10-05 17:08:43,913 - playground.network.packet.PacketType - DEBUG - Deserialized message vsockets.VNICSocketOpenResponsePacket v1.0 (7f1506ac1668). 0/0 bytes available/total
+2019-10-05 17:08:43,914 - playground.network.protocols.vsockets - DEBUG - Open callback for connection 1. Failure? True
+2019-10-05 17:08:43,914 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f150a6c04a8> Deserialize stream at position 0/0
+Traceback (most recent call last):
+  File "echo_server.py", line 58, in <module>
+    server = loop.run_until_complete(coro)
+  File "/usr/lib/python3.6/asyncio/base_events.py", line 484, in run_until_complete
+    return future.result()
+  File "/home/student_20194/net/Playground3/src/playground/network/devices/vnic/connect.py", line 351, in create_playground_server
+    connectionId, port = await asyncio.wait_for(future, 30.0)
+  File "/usr/lib/python3.6/asyncio/tasks.py", line 358, in wait_for
+    return fut.result()
+Exception: Could not open socket. Error 1 - Port is not available
+2019-10-05 17:09:02,484 - asyncio - INFO - <Server sockets=[<socket.socket fd=7, family=AddressFamily.AF_INET, type=2049, proto=6, laddr=('127.0.0.1', 35883)>]> is serving
+2019-10-05 17:09:02,485 - playground.network.devices.vnic.connect - INFO - vnic connections {}
+2019-10-05 17:09:02,486 - playground.network.devices.vnic.connect - INFO - No control conenction to VNIC ('127.0.0.1', 40783) yet. Connecting
+2019-10-05 17:09:02,487 - asyncio - DEBUG - connect <socket.socket fd=8, family=AddressFamily.AF_INET, type=2049, proto=6, laddr=('0.0.0.0', 0)> to ('127.0.0.1', 40783)
+2019-10-05 17:09:02,492 - asyncio - DEBUG - poll took 0.022 ms: 1 events
+2019-10-05 17:09:02,495 - playground.network.protocols.vsockets - INFO - <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f4345c92668> setting transport <_SelectorSocketTransport fd=8 read=idle write=<idle, bufsize=0>>
+2019-10-05 17:09:02,495 - asyncio - DEBUG - <socket.socket fd=8, family=AddressFamily.AF_INET, type=2049, proto=6, laddr=('127.0.0.1', 54018), raddr=('127.0.0.1', 40783)> connected to 127.0.0.1:40783: (<_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>, <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f4345c92668>)
+2019-10-05 17:09:02,496 - playground.network.devices.vnic.connect - INFO - Control protocol connected. res=(<_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>, <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f4345c92668>)
+2019-10-05 17:09:02,497 - playground.network.devices.vnic.connect - DEBUG - Ready to proceed for ('127.0.0.1', 40783)
+2019-10-05 17:09:02,497 - playground.network.devices.vnic.connect - INFO - For vnic my_nic, location ('127.0.0.1', 40783), got controlProtocol <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f4345c92668>, transport <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+2019-10-05 17:09:02,498 - playground.network.protocols.vsockets - DEBUG - Requesting listenting socket on port 21012 from vnic (connection ID 1)
+2019-10-05 17:09:02,498 - playground.network.protocols.vsockets - INFO - Listen in <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f4345c92668>. Has transport <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>. For port 21012
+2019-10-05 17:09:02,505 - playground.network.devices.vnic.connect - DEBUG - Awaiting listening to port 21012 to complete
+2019-10-05 17:09:02,506 - asyncio - DEBUG - poll 29999.771 ms took 0.045 ms: 1 events
+2019-10-05 17:09:02,506 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f4345c244a8> Deserialize stream at position 0/98
+2019-10-05 17:09:02,507 - playground.network.packet.PacketType - DEBUG - Deserialized message vsockets.VNICSocketOpenResponsePacket v1.0 (7f4341fa6630). 0/0 bytes available/total
+2019-10-05 17:09:02,507 - playground.network.protocols.vsockets - DEBUG - Open callback for connection 1. Failure? True
+2019-10-05 17:09:02,508 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f4345c244a8> Deserialize stream at position 0/0
+Traceback (most recent call last):
+  File "echo_server.py", line 58, in <module>
+    server = loop.run_until_complete(coro)
+  File "/usr/lib/python3.6/asyncio/base_events.py", line 484, in run_until_complete
+    return future.result()
+  File "/home/student_20194/net/Playground3/src/playground/network/devices/vnic/connect.py", line 351, in create_playground_server
+    connectionId, port = await asyncio.wait_for(future, 30.0)
+  File "/usr/lib/python3.6/asyncio/tasks.py", line 358, in wait_for
+    return fut.result()
+Exception: Could not open socket. Error 1 - Port is not available
+2019-10-05 17:09:06,188 - asyncio - INFO - <Server sockets=[<socket.socket fd=7, family=AddressFamily.AF_INET, type=2049, proto=6, laddr=('127.0.0.1', 46745)>]> is serving
+2019-10-05 17:09:06,190 - playground.network.devices.vnic.connect - INFO - vnic connections {}
+2019-10-05 17:09:06,190 - playground.network.devices.vnic.connect - INFO - No control conenction to VNIC ('127.0.0.1', 40783) yet. Connecting
+2019-10-05 17:09:06,192 - asyncio - DEBUG - connect <socket.socket fd=8, family=AddressFamily.AF_INET, type=2049, proto=6, laddr=('0.0.0.0', 0)> to ('127.0.0.1', 40783)
+2019-10-05 17:09:06,197 - asyncio - DEBUG - poll took 0.020 ms: 1 events
+2019-10-05 17:09:06,200 - playground.network.protocols.vsockets - INFO - <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f4c59ce8668> setting transport <_SelectorSocketTransport fd=8 read=idle write=<idle, bufsize=0>>
+2019-10-05 17:09:06,200 - asyncio - DEBUG - <socket.socket fd=8, family=AddressFamily.AF_INET, type=2049, proto=6, laddr=('127.0.0.1', 54020), raddr=('127.0.0.1', 40783)> connected to 127.0.0.1:40783: (<_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>, <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f4c59ce8668>)
+2019-10-05 17:09:06,201 - playground.network.devices.vnic.connect - INFO - Control protocol connected. res=(<_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>, <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f4c59ce8668>)
+2019-10-05 17:09:06,201 - playground.network.devices.vnic.connect - DEBUG - Ready to proceed for ('127.0.0.1', 40783)
+2019-10-05 17:09:06,202 - playground.network.devices.vnic.connect - INFO - For vnic my_nic, location ('127.0.0.1', 40783), got controlProtocol <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f4c59ce8668>, transport <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+2019-10-05 17:09:06,202 - playground.network.protocols.vsockets - DEBUG - Requesting listenting socket on port 21012 from vnic (connection ID 1)
+2019-10-05 17:09:06,202 - playground.network.protocols.vsockets - INFO - Listen in <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f4c59ce8668>. Has transport <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>. For port 21012
+2019-10-05 17:09:06,209 - playground.network.devices.vnic.connect - DEBUG - Awaiting listening to port 21012 to complete
+2019-10-05 17:09:06,210 - asyncio - DEBUG - poll 29999.773 ms took 0.045 ms: 1 events
+2019-10-05 17:09:06,210 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f4c59c7a4a8> Deserialize stream at position 0/98
+2019-10-05 17:09:06,211 - playground.network.packet.PacketType - DEBUG - Deserialized message vsockets.VNICSocketOpenResponsePacket v1.0 (7f4c5607b668). 0/0 bytes available/total
+2019-10-05 17:09:06,211 - playground.network.protocols.vsockets - DEBUG - Open callback for connection 1. Failure? True
+2019-10-05 17:09:06,212 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f4c59c7a4a8> Deserialize stream at position 0/0
+Traceback (most recent call last):
+  File "echo_server.py", line 58, in <module>
+    server = loop.run_until_complete(coro)
+  File "/usr/lib/python3.6/asyncio/base_events.py", line 484, in run_until_complete
+    return future.result()
+  File "/home/student_20194/net/Playground3/src/playground/network/devices/vnic/connect.py", line 351, in create_playground_server
+    connectionId, port = await asyncio.wait_for(future, 30.0)
+  File "/usr/lib/python3.6/asyncio/tasks.py", line 358, in wait_for
+    return fut.result()
+Exception: Could not open socket. Error 1 - Port is not available
+2019-10-05 17:12:37,375 - asyncio - INFO - <Server sockets=[<socket.socket fd=7, family=AddressFamily.AF_INET, type=2049, proto=6, laddr=('127.0.0.1', 39997)>]> is serving
+2019-10-05 17:12:37,377 - playground.network.devices.vnic.connect - INFO - vnic connections {}
+2019-10-05 17:12:37,377 - playground.network.devices.vnic.connect - INFO - No control conenction to VNIC ('127.0.0.1', 40783) yet. Connecting
+2019-10-05 17:12:37,379 - asyncio - DEBUG - connect <socket.socket fd=8, family=AddressFamily.AF_INET, type=2049, proto=6, laddr=('0.0.0.0', 0)> to ('127.0.0.1', 40783)
+2019-10-05 17:12:37,385 - asyncio - DEBUG - poll took 0.022 ms: 1 events
+2019-10-05 17:12:37,387 - playground.network.protocols.vsockets - INFO - <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f262482f668> setting transport <_SelectorSocketTransport fd=8 read=idle write=<idle, bufsize=0>>
+2019-10-05 17:12:37,387 - asyncio - DEBUG - <socket.socket fd=8, family=AddressFamily.AF_INET, type=2049, proto=6, laddr=('127.0.0.1', 54030), raddr=('127.0.0.1', 40783)> connected to 127.0.0.1:40783: (<_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>, <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f262482f668>)
+2019-10-05 17:12:37,389 - playground.network.devices.vnic.connect - INFO - Control protocol connected. res=(<_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>, <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f262482f668>)
+2019-10-05 17:12:37,389 - playground.network.devices.vnic.connect - DEBUG - Ready to proceed for ('127.0.0.1', 40783)
+2019-10-05 17:12:37,389 - playground.network.devices.vnic.connect - INFO - For vnic my_nic, location ('127.0.0.1', 40783), got controlProtocol <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f262482f668>, transport <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+2019-10-05 17:12:37,389 - playground.network.protocols.vsockets - DEBUG - Requesting listenting socket on port 21012 from vnic (connection ID 1)
+2019-10-05 17:12:37,390 - playground.network.protocols.vsockets - INFO - Listen in <playground.network.protocols.vsockets.VNICSocketControlClientProtocol object at 0x7f262482f668>. Has transport <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>. For port 21012
+2019-10-05 17:12:37,397 - playground.network.devices.vnic.connect - DEBUG - Awaiting listening to port 21012 to complete
+2019-10-05 17:12:37,398 - asyncio - DEBUG - poll 29999.774 ms took 0.046 ms: 1 events
+2019-10-05 17:12:37,398 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f26247c14a8> Deserialize stream at position 0/98
+2019-10-05 17:12:37,399 - playground.network.packet.PacketType - DEBUG - Deserialized message vsockets.VNICSocketOpenResponsePacket v1.0 (7f2620b43630). 0/0 bytes available/total
+2019-10-05 17:12:37,399 - playground.network.protocols.vsockets - DEBUG - Open callback for connection 1. Failure? True
+2019-10-05 17:12:37,400 - playground.network.packet.PacketType - DEBUG - <playground.network.packet.PacketType.PacketType.Deserializer.<locals>.ConcreteDeserializer object at 0x7f26247c14a8> Deserialize stream at position 0/0
+Traceback (most recent call last):
+  File "echo_server.py", line 58, in <module>
+    server = loop.run_until_complete(coro)
+  File "/usr/lib/python3.6/asyncio/base_events.py", line 484, in run_until_complete
+    return future.result()
+  File "/home/student_20194/net/Playground3/src/playground/network/devices/vnic/connect.py", line 351, in create_playground_server
+    connectionId, port = await asyncio.wait_for(future, 30.0)
+  File "/usr/lib/python3.6/asyncio/tasks.py", line 358, in wait_for
+    return fut.result()
+Exception: Could not open socket. Error 1 - Port is not available
+Traceback (most recent call last):
+  File "echo_server.py", line 4, in <module>
+    import playground
+ModuleNotFoundError: No module named 'playground'
+Traceback (most recent call last):
+  File "echo_server.py", line 4, in <module>
+    import playground
+ModuleNotFoundError: No module named 'playground'
