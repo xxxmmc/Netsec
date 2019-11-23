@@ -1,65 +1,41 @@
+from ..poop.protocol import POOP
 from playground.network.common import StackingProtocolFactory, StackingProtocol, StackingTransport
 import logging
 import time
+import datetime
 import asyncio
-from random import randrange
-from playground.network.packet import PacketType
-from playground.network.packet.fieldtypes import UINT8, UINT32, STRING, BUFFER
-from playground.network.packet.fieldtypes.attributes import Optional
-# 9:47
-
 import binascii
 import bisect
+from random import randrange
+from playground.network.packet import PacketType
+from playground.network.packet.fieldtypes import UINT8, UINT32, STRING, BUFFER, LIST
+from playground.network.packet.fieldtypes.attributes import Optional
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import ec
+from cryptography.hazmat.primitives.kdf.hkdf import HKDF
+from cryptography.hazmat.primitives.serialization import Encoding
+from cryptography.hazmat.primitives.serialization import PublicFormat
+from cryptography.hazmat.primitives.serialization import load_pem_private_key
+from cryptography.hazmat.primitives.serialization import load_pem_public_key
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography import x509
+from cryptography.x509.oid import NameOID
+import os
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
-logger = logging.getLogger("playground.__connector__." + __name__)
+
+logger = logging.getLogger("playground.__crap__." + __name__)
+
 
 class CrapPacketType(PacketType):
     DEFINITION_IDENTIFIER = "crap"
     DEFINITION_VERSION = "1.0"
 
+
 class HandshakePacket(CrapPacketType):
     DEFINITION_IDENTIFIER = "crap.handshakepacket"
-    DEFINITION_VERSION = "1.0"
-
-    NOT_STARTED = 0
-    SUCCESS     = 1
-    ERROR       = 2
-
-    FIELDS = [
-        ("status", UINT8),
-        ("signature", BUFFER({Optional:True})),
-        ("pk", BUFFER({Optional:True})),
-        ("cert", BUFFER({Optional:True}))
-    ]
-
-class DataPacket(CrapPacketType):
-    DEFINITION_IDENTIFIER = "crap.datapacket"
-    DEFINITION_VERSION = "1.0"
-
-    FIELDS = [
-        ("data", BUFFER),
-        ("signature", BUFFER),
-    ]
-
-class PoopPacketType(PacketType):
-    DEFINITION_IDENTIFIER = "poop"
-    DEFINITION_VERSION = "1.0"
-
-
-class DataPacket(PoopPacketType):
-    DEFINITION_IDENTIFIER = "poop.datapacket"
-    DEFINITION_VERSION = "1.0"
-
-    FIELDS = [
-        ("seq", UINT32({Optional: True})),
-        ("hash", UINT32),
-        ("data", BUFFER({Optional: True})),
-        ("ACK", UINT32({Optional: True})),
-    ]
-
-
-class HandshakePacket(PoopPacketType):
-    DEFINITION_IDENTIFIER = "poop.handshakepacket"
     DEFINITION_VERSION = "1.0"
 
     NOT_STARTED = 0
@@ -67,531 +43,346 @@ class HandshakePacket(PoopPacketType):
     ERROR = 2
 
     FIELDS = [
-        ("SYN", UINT32({Optional: True})),
-        ("ACK", UINT32({Optional: True})),
         ("status", UINT8),
-        ("hash", UINT32)
+        ("nonce", UINT32({Optional: True})),
+        ("nonceSignature", BUFFER({Optional: True})),
+        ("signature", BUFFER({Optional: True})),
+        ("pk", BUFFER({Optional: True})),
+        ("cert", BUFFER({Optional: True})),
+        ("certChain", LIST(BUFFER, {Optional: True}))
     ]
 
 
-class ShutdownPacket(PoopPacketType):
-    DEFINITION_IDENTIFIER = "poop.shutdownpacket"
+class DataPacket(CrapPacketType):
+    DEFINITION_IDENTIFIER = "crap.datapacket"
     DEFINITION_VERSION = "1.0"
 
-    SUCCESS = 0
-    ERROR = 1
-
     FIELDS = [
-        ("FIN", UINT32),
-        ("hash", UINT32)
+        ("data", BUFFER),
     ]
 
-class CRAPTransport(StackingTransport):
-    def connect_protocol(self,protocol):
-        self.protocol= protocol
 
-    def write(self,data):
-        self.protocol.send_data(data)
+class ErrorPacket(CrapPacketType):
+    DEFINITION_IDENTIFIER = "crap.errorpacket"
+    DEFINITION_VERSION = "1.0"
+    FIELDS = [
+        ("message", STRING)
+    ]
 
-    def close(self):
-        self.protocol.init_close()
 
-class POOPTransport(StackingTransport):
-    def connect_protocol(self, protocol):
+class CrapTransport(StackingTransport):
+    def set_protocol(self, protocol):
         self.protocol = protocol
 
     def write(self, data):
-        self.protocol.send_data(data)
+        if self.protocol._mode == "client":
+            aesgcm = AESGCM(self.protocol.encA)
+            encDataA = aesgcm.encrypt(self.protocol.ivA, data, None)
+            self.protocol.ivA = (int.from_bytes(self.protocol.ivA, "big") + 1).to_bytes(12, "big")
+            new_packet = DataPacket(data=encDataA)
+            self.protocol.transport.write(new_packet.__serialize__())
+            print("Client send encrypted data")
+
+        if self.protocol._mode == "server":
+            aesgcm = AESGCM(self.protocol.encB)
+            encDataB = aesgcm.encrypt(self.protocol.ivB, data, None)
+            self.protocol.ivB = (int.from_bytes(self.protocol.ivB, "big") + 1).to_bytes(12, "big")
+            new_packet = DataPacket(data=encDataB)
+            self.protocol.transport.write(new_packet.__serialize__())
+            print("server send encrypted data")
 
     def close(self):
-        self.protocol.init_close()
+        self.protocol.transport.close()
 
-
-class ErrorHandleClass():
-    def handleException(self, e):
-        print(e)
 
 class CRAP(StackingProtocol):
     def __init__(self, mode):
-        logger.debug("{} CRAP: init protocol".format(mode))
+        logger.debug("************{} side crap __init__() **********".format(mode))
         super().__init__()
-        self.mode = mode
-        ####
+        self._mode = mode
+        self.client_private_key = None
+        self.client_public_key = None
+        self.client_sign_pvk = None
+        self.client_sign_pbk = None
+        self.server_private_key = None
+        self.server_public_key = None
+        self.server_sign_pvk = None
+        self.server_sign_pbk = None
+        self.cnonce = 0
+        self.snonce = 0
+        self.deserializer = CrapPacketType.Deserializer()
+
     def connection_made(self, transport):
         logger.debug("{} CRAP: connection made".format(self._mode))
-        if self._mode == "client":
-
-    def data_received(self, buffer):
-        logger.debug("{} POOP recv a buffer of size {}".format(self._mode, len(buffer)))
-
-
-
-class POOP(StackingProtocol):
-    def __init__(self, mode):
-        logger.debug("{} POOP: init protocol".format(mode))
-        print("test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        super().__init__()
-
-        self._mode = mode
-        # 0 = no connection, 1 = waiting for handshake ack, 2 = connection established, 3 = dying
-        self.SYN = None
-        self.FIN = None
-        self.status = 0
-        self.last_recv = 0  # time of last pkt received
-        self.shutdown_wait_start = 0
-        # sequence number of last received data pkt that was passed up to the app layer
-        self.last_in_order_seq = 0
-        self.recv_queue = []
-        self.recv_wind_size = 10
-        self.recv_next = None
-        self.send_buff = []
-        self.send_packet = None
-        self.send_packet_time = 0
-        self.send_queue = []
-        self.send_wind_size = 5
-        self.send_next = None  # sequence number of next pkt to send
-        self.seq = randrange(255)
-        self.higher_transport = None
-        self.deserializer = PoopPacketType.Deserializer(
-            errHandler=ErrorHandleClass())
-        self.next_expected_ack = None
-
-    def connection_made(self, transport):
-        logger.debug("{} POOP: connection made".format(self._mode))
-        self.loop = asyncio.get_event_loop()
-        self.last_recv = time.time()
-        self.loop.create_task(self.connection_timeout_check())
         self.transport = transport
+        self.crap_transport = CrapTransport(self.transport)
+        self.crap_transport.set_protocol(self)
 
-        self.higher_transport = POOPTransport(transport)
-        self.higher_transport.connect_protocol(self)
+        if self._mode == "client":
+            self.client_private_key= ec.generate_private_key(ec.SECP384R1(), default_backend())
+            self.client_public_key = self.client_private_key.public_key()
+            self.client_sign_pvk = rsa.generate_private_key(public_exponent=65537, key_size=2048, backend=default_backend())
+            self.client_sign_pbk = self.client_sign_pvk.public_key()
+            root_CA_cert = open('20194_root.cert', 'rb').read()
+            team5_CA_cert = open('team5_signed.cert', 'rb').read()
+            team5_CA_private_key = open('private_key.pem', 'rb').read()
+            self.team5_CA_sign_pvk = load_pem_private_key(team5_CA_private_key, password=None, backend=default_backend())
+            self.root_CA_cert = x509.load_pem_x509_certificate(root_CA_cert, default_backend())
+            self.team5_CA_cert = x509.load_pem_x509_certificate(team5_CA_cert, default_backend())
+            self.team5_CA_sign_pbk = self.team5_CA_sign_pvk.public_key()
+            self.root_CA_sign_pbk = self.root_CA_cert.public_key()
 
-        self.SYN = randrange(2**32)
-        self.status = "LISTEN"
-        if self._mode == "client":  # client send first packet
-            handshake_pkt = HandshakePacket(SYN=self.SYN, status=0, hash=0)
-            handshake_pkt.hash = binascii.crc32(
-                handshake_pkt.__serialize__()) & 0xffffffff
-            self.transport.write(handshake_pkt.__serialize__())
+            print("load cert success!")
 
-            # TODO:start timer
-            self.handshake_timeout_task = self.loop.create_task(
-                self.handshake_timeout_check())
-            self.status = 'SYN_SENT'
-            # save sended handshake packet
-            self.send_buff.append(handshake_pkt.__serialize__())
+            self.cnonce = randrange(2 ** 32)
+            self.serialized_cnonce = str(self.cnonce).encode('ASCII')
 
-    def handshake_send_error(self):
-        print("handshake error!")
-        error_pkt = HandshakePacket(status=2)
-        error_pkt.hash = binascii.crc32(error_pkt.__serialize__()) & 0xffffffff
-        self.transport.write(error_pkt.__serialize__())
-        return
+            builder = x509.CertificateBuilder()
+            builder = builder.subject_name(x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, u'20194.5.20.30'), ]))
+            builder = builder.issuer_name(self.team5_CA_cert.subject)
+            builder = builder.not_valid_before(datetime.datetime.today() - (datetime.timedelta(days=90)))
+            builder = builder.not_valid_after(datetime.datetime.today() + (datetime.timedelta(days=90)))
+            builder = builder.serial_number(x509.random_serial_number())
+            builder = builder.public_key(self.client_sign_pbk)
+            builder = builder.add_extension(x509.SubjectAlternativeName([x509.DNSName(u"20194.5.20.30")]), critical=False)
+            certificate = builder.sign(private_key=self.team5_CA_sign_pvk, algorithm=hashes.SHA256(),
+                                       backend=default_backend())
+            client_cert = certificate.public_bytes(Encoding.PEM)
 
-    def printpkt(self, pkt):  # try to print packet content
-        print("-----------")
-        for f in pkt.FIELDS:
-            fname = f[0]
-            print(fname + ": " + pkt._fields[fname]._data)
-        print("-----------")
-        return
+            data = self.client_public_key.public_bytes(Encoding.PEM, PublicFormat.SubjectPublicKeyInfo)
+            sigA = self.client_sign_pvk.sign(data, padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH), hashes.SHA256())
+            tls_handshake_packet = HandshakePacket(status=0)
+            tls_handshake_packet.pk = data
+            tls_handshake_packet.signature = sigA
+            tls_handshake_packet.nonce = self.cnonce
+            tls_handshake_packet.cert = client_cert
+            tls_handshake_packet.certChain = [team5_CA_cert]
+            self.transport.write(tls_handshake_packet.__serialize__())
+            logger.debug("Client send TLS handshake!")
 
-    def handshake_pkt_recv(self, pkt):
-        if pkt.status == 2:
-            # ERROR
-            logger.debug("{} POOP: ERROR recv a error pkt ".format(self._mode))
-            # TODO: resend packet
-            self.transport.write(self.send_buff[0])
-            return
-        elif self.status == "LISTEN":
-            if pkt.status == 0:
-                if pkt.SYN:  # server LISTEN and handshake get the packet from the client
-                    pkt_copy = HandshakePacket(SYN=pkt.SYN,
-                                               status=pkt.status,
-                                               hash=0)
-                    if binascii.crc32(
-                            pkt_copy.__serialize__()) & 0xffffffff != pkt.hash:
-                        return
-                    handshake_pkt = HandshakePacket(SYN=self.SYN,
-                                                    ACK=pkt.SYN + 1,
-                                                    status=1,
-                                                    hash=0)
-                    handshake_pkt.hash = binascii.crc32(
-                        handshake_pkt.__serialize__()) & 0xffffffff
-                    self.transport.write(handshake_pkt.__serialize__())
-                    self.status = "SYN_SENT"
-                    self.send_buff.append(handshake_pkt.__serialize__())  # @
-                else:
-                    # ERROR: there is no SYN in the handshake packet
-                    self.handshake_send_error()
-                    return
-            elif pkt.status == 1:
-                # ERROR: handshake packet status shouldn't be 1 when the server status is LISTEN
-                self.handshake_send_error()
-                return
-            else:
-                # ERROR: not expecting status=2
-                self.handshake_send_error()
-                return
-        elif self.status == "SYN_SENT":  # server or client already send packet waiting for ack
-            if pkt.status == 1:
-                if pkt.ACK:  # is ack packet
-                    pkt_copy = HandshakePacket(SYN=pkt.SYN,
-                                               ACK=pkt.ACK,
-                                               status=pkt.status,
-                                               hash=0)
-                    if binascii.crc32(
-                            pkt_copy.__serialize__()) & 0xffffffff != pkt.hash:
-                        return
-                    if pkt.ACK == self.SYN + 1:  # ack packet is what expected
-                        # previous sended packet get ack so can remove the previous packet
-                        # previous_hs_packet = self.send_buff.pop(0)
-                        self.send_buff = []
-                        if self._mode == "client":
-                            handshake_pkt = HandshakePacket(SYN=self.SYN + 1,
-                                                            ACK=pkt.SYN + 1,
-                                                            status=1,
-                                                            hash=0)
-                            handshake_pkt.hash = binascii.crc32(
-                                handshake_pkt.__serialize__()) & 0xffffffff
-                            self.transport.write(handshake_pkt.__serialize__())
-                            self.send_buff.append(
-                                handshake_pkt.__serialize__())  # @
-                            self.handshake_timeout_task.cancel()
-                        self.status = "ESTABLISHED"
-                        self.send_next = self.SYN
-                        self.next_expected_ack = self.SYN
-                        self.recv_next = pkt.SYN - 1
-                        self.last_recv = time.time()
-                        self.loop.create_task(self.wait_ack_timeout())
-                        self.higherProtocol().connection_made(
-                            self.higher_transport)
-                        logger.debug("{} POOP: handshake success!".format(
-                            self._mode))
-                    else:
-                        # ERROR: the number of ACK in handshake is not expected
-                        self.handshake_send_error()
-                        return
-                else:
-                    # ERROR: there is no ACK in handshake packet
-                    self.handshake_send_error()
-                    return
-            elif pkt.status == 0:  # server ack packet dropped and the client just assume their syn packet dropped, the handshake
-                # previous_hs_packet = self.send_buff.pop(0)
-                self.send_buff = []
-                if pkt.SYN:
-                    pkt_copy = HandshakePacket(SYN=pkt.SYN,
-                                               status=pkt.status,
-                                               hash=0)
-                    if binascii.crc32(
-                            pkt_copy.__serialize__()) & 0xffffffff != pkt.hash:
-                        return
-                    handshake_pkt = HandshakePacket(SYN=self.SYN,
-                                                    ACK=pkt.SYN + 1,
-                                                    status=1,
-                                                    hash=0)
-                    handshake_pkt.hash = binascii.crc32(
-                        handshake_pkt.__serialize__()) & 0xffffffff
-                    self.transport.write(handshake_pkt.__serialize__())
-                    self.status = "SYN_SENT"
-                    self.send_buff.append(handshake_pkt.__serialize__())  # @
-                else:
-                    # ERROR: there is no SYN in the handshake packet
-                    self.handshake_send_error()
-            else:
-                # ERROR: not expecting status=2
-                self.handshake_send_error()
-                return
-        elif self.status == "ESTABLISHED":
-            # ERROR: recvive a handshake packet when connect ESTABLISHED
-            logger.debug("recvive a handshake packet when connect ESTABLISHED")
-            return
-        else:
-            # ERROR
-            logger.debug("BUG!")
-            return
+
+
+
 
     def data_received(self, buffer):
-        logger.debug("{} POOP recv a buffer of size {}".format(
-            self._mode, len(buffer)))
-
         self.deserializer.update(buffer)
         for pkt in self.deserializer.nextPackets():
-            pkt_type = pkt.DEFINITION_IDENTIFIER
-            if not pkt_type:  # NOTE: not sure if this is necessary
-                print("{} POOP error: the recv pkt don't have a DEFINITION_IDENTIFIER")
-                return
-            logger.debug("{} POOP the pkt name is: {}".format(
-                self._mode, pkt_type))
-            if pkt_type == "poop.handshakepacket":
-                self.last_recv = time.time()
-                self.handshake_pkt_recv(pkt)
-                continue
-            elif pkt_type == "poop.datapacket":
-                if self.status == 'FIN_SENT':
-                    self.shutdown_ack_recv(pkt)
-                self.last_recv = time.time()
-                self.data_pkt_recv(pkt)
-                continue
-            elif pkt_type == "poop.shutdownpacket":
-                if self.status == 'FIN_SENT':
-                    self.shutdown_ack_recv(pkt)
-                self.last_recv = time.time()
-                self.init_shutdown_pkt_recv(pkt)
-                continue
-            else:
-                print("{} POOP error: the recv pkt name: \"{}\" this is unexpected".format(
-                    self._mode, pkt_type))
-                return
-        print("Not enough data for a packet.")
-
-    async def handshake_timeout_check(self):
-        count = 0
-        while count < 3:
-            # if (time.time() - self.last_recv) > 1:
-            # time out after 10 sec
-            if self.status == "ESTABLISHED" or self.status == "FIN_SENT" or self.status == "DYING":
-                return
-            handshake_pkt = HandshakePacket(SYN=self.SYN, status=0, hash=0)
-            handshake_pkt.hash = binascii.crc32(
-                handshake_pkt.__serialize__()) & 0xffffffff
-            self.transport.write(handshake_pkt.__serialize__())
-            count += 1
-            await asyncio.sleep(1)  # - (time.time() - self.last_recv))
-
-        # this function is called when the other side initiate a shutdown (received when status == ESTABLISHED)
-    def init_shutdown_pkt_recv(self, pkt):
-        if pkt.DEFINITION_IDENTIFIER != "poop.shutdownpacket":
-            # wrong pkt. Check calling function?
-            return
-        if not pkt.FIN:
-            # missing fields
-            print("Missing field(s): FIN")
-            return
-        if pkt.FIN != self.recv_next:
-            # missing packets
-            print("Wrong FIN. Missing packets?")
-            return
-        # send (FIN) ACK data packet and shutdown
-        pkt = DataPacket(ACK=pkt.FIN, hash=0)
-        pkt.hash = binascii.crc32(pkt.__serialize__()) & 0xffffffff
-        self.transport.write(pkt.__serialize__())
-        self.transport.close()
-        return
-
-    # this function is called when self already sent a shutdown packet (status == FIN_SENT)
-    def shutdown_ack_recv(self, pkt):
-        if pkt.DEFINITION_IDENTIFIER == "poop.shutdownpacket":
-            # simultaneous shutdown. Shutdown immediately.
-            print("Shutdown due to: Simultaneous shutdown")
-            self.status = 'DYING'
-            self.higherProtocol().connection_lost(None)
-            self.transport.close()
-            return
-        print('Data pkt received while status == FIN_SENT')
-        if pkt.DEFINITION_IDENTIFIER != "poop.datapacket" or self.status != 'FIN_SENT':
-            # wrong pkt or wrong call (should only be called when self.status == 'FIN_SENT').
-            return
-        if pkt.seq or pkt.data:
-            print('Unexpected field(s) in FACK packet.')
-            return
-        pkt_copy = DataPacket(ACK=pkt.ACK, hash=0)
-        if binascii.crc32(pkt_copy.__serialize__()) & 0xffffffff != pkt.hash:
-            print('Wrong hash for FACK pkt, dropping.')
-            return
-        if pkt.ACK == self.FIN:
-            # fin has been ACKed by other agent. Teardown connection.
-            print("Shutdown due to: FIN has been acked.")
-            self.status = 'DYING'
-            self.higherProtocol().connection_lost(None)
-            self.transport.close()
-        else:
-            print("missing ACK field or wrong ACK number.")
-            if pkt.ACK:
-                print("Pkt type: {} Pkt has ACK={} while protocol has {}".format(
-                    pkt.DEFINITION_IDENTIFIER, pkt.ACK, self.FIN))
-        return
-
-    # initiate a shutdown by sending the shutdownpacket
-    def send_shutdown_pkt(self):
-        print('sending shutdown pkt.')
-        self.FIN = self.send_next
-        pkt = ShutdownPacket(FIN=self.FIN, hash=0)
-        pkt.hash = binascii.crc32(pkt.__serialize__()) & 0xffffffff
-        self.transport.write(pkt.__serialize__())
-        self.loop.create_task(self.shutdown_timeout_check())
-        self.status = 'FIN_SENT'
-        return
-
-    async def shutdown_timeout_check(self):
-        count = 0
-        while count < 2:
-            await asyncio.sleep(30)
-            if self.status != 'DYING':
-                print('Timeout. Resending shutdown pkt.')
-                pkt = ShutdownPacket(FIN=self.send_next, hash=0)
-                pkt.hash = binascii.crc32(pkt.__serialize__()) & 0xffffffff
-                self.transport.write(pkt.__serialize__())
-                count += 1
-            else:
-                return
-        if self.status != 'DYING':
-            print("Shutdown due to: timeout.")
-            self.status = 'DYING'
-            self.higherProtocol().connection_lost(None)
-            self.transport.close()
-        return
-
-    async def shutdown_send_wait(self):
-        # this either send shutdown after all ack received or destroyed by connection_timeout
-        print("The same error again")
-        while True:
-            await asyncio.sleep(1)
-            if not self.send_packet:
-                self.send_shutdown_pkt()
-                return
-            elif self.status != 'ESTABLISHED':
+            if isinstance(pkt, ErrorPacket):
+                print("Receive an ErrorPacket from autograder!{}".format(pkt.message))
                 return
 
-    def connection_lost(self, exc):
-        logger.debug(
-            "{} passthrough connection lost. Shutting down higher layer.".
-            format(self._mode))
-        self.higherProtocol().connection_lost(exc)
+            if pkt.DEFINITION_IDENTIFIER == "crap.handshakepacket":
+                logger.debug("***{} CRAP: Received a TLS handshakepacket***".format(self._mode))
+                if self._mode == "server":
+                    root_CA_cert = open('20194_root.cert', 'rb').read()
+                    team5_CA_cert = open('team5_signed.cert', 'rb').read()
+                    team5_CA_private_key = open('private_key.pem', 'rb').read()
 
-    async def connection_timeout_check(self):
-        while True:
-            if (time.time() - self.last_recv) > 300:
-                # time out after 5 min
-                print("Shutdown due to: connection timeout")
-                self.status = "DYING"
-                self.higherProtocol().connection_lost(None)
-                self.transport.close()
-                return
-            await asyncio.sleep(300 - (time.time() - self.last_recv))
+                    self.team5_CA_sign_pvk = load_pem_private_key(team5_CA_private_key, password=None,
+                                                                  backend=default_backend())
+                    self.root_CA_cert = x509.load_pem_x509_certificate(root_CA_cert, default_backend())
+                    self.team5_CA_cert = x509.load_pem_x509_certificate(team5_CA_cert, default_backend())
+                    self.team5_CA_sign_pbk = self.team5_CA_sign_pvk.public_key()
+                    self.root_CA_sign_pbk = self.root_CA_cert.public_key()
 
-    async def wait_ack_timeout(self):
-        while self.status == "ESTABLISHED":
-            await asyncio.sleep(2)
-            if self.send_packet:
-                try:
-                    print(self.send_packet)
-                    self.transport.write(self.send_packet.__serialize__())
-                except Exception as error:
-                    print(error)
+                    if pkt.status == 0:
+                        client_certification = x509.load_pem_x509_certificate(pkt.cert, default_backend())
+                        Upper_certification = x509.load_pem_x509_certificate(pkt.certChain[0], default_backend())
 
-    def data_pkt_recv(self, pkt):
-        # Drop if not a datapacket
-        if pkt.DEFINITION_IDENTIFIER != "poop.datapacket":
-            return
+                        if(Upper_certification.issuer != self.root_CA_cert.issuer):
+                            #Upper_certification.subject.get_attributes_for_oid(NameOID.COMMON_NAME)[0].value
+                            print("Upper_cert is not signed by a trusted root CA!")
+                            return
 
-        # If ACK is set, handle ACK
-        if pkt.ACK:
-            if pkt.seq or pkt.data:
-                return 
-            # Check hash, drop if invalid
-            pkt_copy = DataPacket(ACK=pkt.ACK, hash=0)
-            if binascii.crc32(
-                    pkt_copy.__serialize__()) & 0xffffffff != pkt.hash:
-                print("Wrong hash in ACK")
-                return
-            # If ACK matches seq of a pkt in send queue, take off of send queue, and update send queue
-            if pkt.ACK == self.send_packet.seq:
-                self.send_packet = None
-                self.queue_send_pkts()
-                print("IN: ACK=" + str(pkt.ACK))
+                        self.cert_pubkA = client_certification.public_key()
+                        try:
+                            self.cert_pubkA.verify(pkt.signature, pkt.pk,
+                                                 padding.PSS(mgf=padding.MGF1(hashes.SHA256()),
+                                                             salt_length=padding.PSS.MAX_LENGTH), hashes.SHA256())
 
-            else:
-                logger.debug("IN: ACK="+str(pkt.ACK))
-            return         
+                        except Exception as error:
+                            logger.debug("Server verify fails because DH public_key signature does not match")
+                            tls_handshake_packet = HandshakePacket(status=2)
+                            self.transport.write(tls_handshake_packet.__serialize__())
+                            self.transport.close()
 
-        if pkt.seq <= self.recv_next + self.recv_wind_size:
-            pkt_copy = DataPacket(seq=pkt.seq, data=pkt.data, hash=0)
-            if binascii.crc32(
-                    pkt_copy.__serialize__()) & 0xffffffff != pkt.hash:
-                return
-        else:
-            return
 
-        print("IN: SEQ=" + str(pkt.seq))
 
-        ack_pkt = DataPacket(ACK=pkt.seq, hash=0)
-        ack_pkt.hash = binascii.crc32(ack_pkt.__serialize__()) & 0xffffffff
-        self.transport.write(ack_pkt.__serialize__())
-        print("OUT: ACK=" + str(ack_pkt.ACK))
+                        logger.debug("Server verify cert success")
+                        self.server_private_key = ec.generate_private_key(ec.SECP384R1(), default_backend())
+                        self.server_public_key = self.server_private_key.public_key()
+                        self.server_sign_pvk = rsa.generate_private_key(public_exponent=65537, key_size=2048,
+                                                                        backend=default_backend())
+                        self.server_sign_pbk = self.server_sign_pvk.public_key()
+                        self.snonce = randrange(255)
+                        self.serialized_snonce = str(self.snonce).encode('ASCII')
+                        self.serialized_cnonce = str(pkt.nonce).encode('ASCII')
 
-        if pkt.seq < self.recv_next:
-            return
+                        #generate shared_key
+                        recv_pbk = load_pem_public_key(pkt.pk, backend=default_backend())
+                        self.shared_key = self.server_private_key.exchange(ec.ECDH(), recv_pbk)
 
-        self.recv_queue.append(pkt)
-        self.recv_queue.sort(key=lambda pkt_: pkt_.seq)
+                        print("111111111111111111")
+                        data = self.server_public_key.public_bytes(Encoding.PEM, PublicFormat.SubjectPublicKeyInfo)
+                        sigB = self.server_sign_pvk.sign(data, padding.PSS(mgf=padding.MGF1(hashes.SHA256()),salt_length=padding.PSS.MAX_LENGTH),hashes.SHA256())
+                        tls_handshake_packet = HandshakePacket(status=1)
+                        tls_handshake_packet.pk = data
+                        tls_handshake_packet.signature = sigB
+                        tls_handshake_packet.nonce = self.snonce
 
-        while self.recv_queue:
-            if self.recv_queue[0].seq == self.recv_next:
-                self.higherProtocol().data_received(
-                    self.recv_queue.pop(0).data)
-                while self.recv_queue:
-                    if self.recv_queue[0].seq == self.recv_next:
-                        self.recv_queue.pop(0)
-                    else:
-                        break
-                if self.recv_next == 2**32:
-                    self.recv_next = 0
-                else:
-                    self.recv_next += 1
-            else:
-                break
-        '''
-        # MIGHT BE UNNECESSARY
-        for pkt in self.recv_queue:
-            if pkt.seq < self.recv_next:
-                del(pkt)
-        '''
+                        print("12312313123123132")
 
-    def send_data(self, data):
-        self.send_buff += data
-        self.queue_send_pkts()
+                        builder = x509.CertificateBuilder()
+                        builder = builder.subject_name(
+                            x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, u'20194.5.20.30'), ]))
+                        builder = builder.issuer_name(self.team5_CA_cert.subject)
+                        builder = builder.not_valid_before(datetime.datetime.today() - (datetime.timedelta(days=90)))
+                        builder = builder.not_valid_after(datetime.datetime.today() + (datetime.timedelta(days=90)))
+                        builder = builder.serial_number(x509.random_serial_number())
+                        builder = builder.public_key(self.server_sign_pbk)
+                        builder = builder.add_extension(x509.SubjectAlternativeName([x509.DNSName(u"20194.5.20.30")]),
+                                                        critical=False)
+                        certificate = builder.sign(private_key=self.team5_CA_sign_pvk, algorithm=hashes.SHA256(),
+                                                   backend=default_backend())
+                        server_cert = certificate.public_bytes(Encoding.PEM)
+                        print("Server get signed cert success!!!")
 
-    def init_close(self):
-        # kill higher protocol
-        print('Higher protocol called init_close(). Killing higher protocol.')
-        self.higherProtocol().connection_lost(None)
-        if not self.send_packet:
-           print("Ball Ball YOU")
-           self.send_shutdown_pkt()
-        else:
-           print(self.send_packet)
-           self.loop.create_task(self.shutdown_send_wait())
+                        tls_handshake_packet.cert = server_cert
+                        tls_handshake_packet.certChain = [team5_CA_cert]
 
-    def queue_send_pkts(self):
-        while self.send_buff and not self.send_packet:
-            if len(self.send_buff) >= 15000:
-                pkt = DataPacket(seq=self.send_next,
-                                 data=bytes(self.send_buff[0:15000]),
-                                 hash=0)
-                pkt.hash = binascii.crc32(pkt.__serialize__()) & 0xffffffff
-                self.send_buff = self.send_buff[15000:]
-            else:
-                pkt = DataPacket(seq=self.send_next,
-                                 data=bytes(
-                                     self.send_buff[0:len(self.send_buff)]),
-                                 hash=0)
-                pkt.hash = binascii.crc32(pkt.__serialize__()) & 0xffffffff
-                self.send_buff = []
-            if self.recv_next == 2**32:
-                self.recv_next = 0
-            else:
-                self.send_next += 1
+                        cnonceSignature = self.server_sign_pvk.sign(self.serialized_cnonce, padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH), hashes.SHA256())
+                        tls_handshake_packet.nonceSignature = cnonceSignature
 
-            #self.send_queue.append(pkt)
-            self.send_packet = pkt
-            self.send_packet_time = time.time()
-            self.transport.write(pkt.__serialize__())
-            print("OUT: SEQ=" + str(pkt.seq))
-            # self.loop.create_task(self.wait_ack_timeout(pkt))
+                        self.transport.write(tls_handshake_packet.__serialize__())
+                        logger.debug("Server send TLS handshake!")
 
-SecureClientFactory = StackingProtocolFactory.CreateFactoryType(
-        lambda: POOP(mode="client"),lambda:CRAP(mode="client"))
+                    elif pkt.status == 1:
+                        try:
+                            self.cert_pubkA.verify(pkt.nonceSignature, self.serialized_snonce,
+                                                      padding.PSS(mgf=padding.MGF1(hashes.SHA256()),
+                                                                  salt_length=padding.PSS.MAX_LENGTH),
+                                                      hashes.SHA256())
 
-PassthroughServerFactory = StackingProtocolFactory.CreateFactoryType(
-        lambda: POOP(mode="server"),lambda:CRAP(cmode="server"))
+                        except Exception as error:
+                            logger.debug("server signature verify wrong: nonce")
+                            tls_handshake_packet = HandshakePacket(status=2)
+                            self.transport.write(tls_handshake_packet.__serialize__())
+                            self.transport.close()
+                        print("Server TLS Handshake complete")
+
+                        # Create hash 1, IVA, IVB
+                        digest1 = hashes.Hash(hashes.SHA256(), backend=default_backend())
+                        digest1.update(self.shared_key)
+                        hash1 = digest1.finalize()
+                        self.ivA = hash1[0:12]
+                        self.ivB = hash1[12:24]
+                        print("server iva:", self.ivA)
+                        print("server ivb:", self.ivB)
+
+                        # Create hash2, encA
+                        digest2 = hashes.Hash(hashes.SHA256(), backend=default_backend())
+                        digest2.update(hash1)
+                        hash2 = digest2.finalize()
+                        self.decB = hash2[0:16]
+                        print("server dec:", self.decB)
+
+                        # Create hash3, decA
+                        digest3 = hashes.Hash(hashes.SHA256(), backend=default_backend())
+                        digest3.update(hash2)
+                        hash3 = digest3.finalize()
+                        self.encB = hash3[0:16]
+                        print("server enc:", self.encB)
+
+                        self.higherProtocol().connection_made(self.crap_transport)
+
+
+
+                elif self._mode == "client" and pkt.status == 1:
+                    server_certification = x509.load_pem_x509_certificate(pkt.cert, default_backend())
+                    Upper_certification = x509.load_pem_x509_certificate(pkt.certChain[0], default_backend())
+                    # ToDo certification integrity verify and common name verify
+                    if (Upper_certification.issuer != self.root_CA_cert.issuer):
+                        # Upper_certification.subject.get_attributes_for_oid(NameOID.COMMON_NAME)[0].value
+                        print("Upper_cert is not signed by a trusted root CA!")
+                        return
+
+                    self.cert_pubkB = server_certification.public_key()
+
+                    try:
+                        self.cert_pubkB.verify(pkt.signature, pkt.pk, padding.PSS(mgf=padding.MGF1(hashes.SHA256()),salt_length=padding.PSS.MAX_LENGTH),hashes.SHA256())
+                    except Exception as error:
+                        logger.debug("client signature verify wrong: ECDH public key")
+                        tls_handshake_packet = HandshakePacket(status=2)
+                        self.transport.write(tls_handshake_packet.__serialize__())
+                        self.transport.close()
+
+                    try:
+                        self.cert_pubkB.verify(pkt.nonceSignature, self.serialized_cnonce,padding.PSS(mgf=padding.MGF1(hashes.SHA256()),salt_length=padding.PSS.MAX_LENGTH),hashes.SHA256())
+                    except Exception as error:
+                        logger.debug("client signature verify wrong: nonce")
+                        tls_handshake_packet = HandshakePacket(status=2)
+                        self.transport.write(tls_handshake_packet.__serialize__())
+                        self.transport.close()
+
+                    self.serialized_snonce = str(pkt.nonce).encode('ASCII')
+                    snonceSignature = self.client_sign_pvk.sign(self.serialized_snonce,padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH),hashes.SHA256())
+                    tls_handshake_packet = HandshakePacket(status=1, nonceSignature=snonceSignature)
+                    self.transport.write(tls_handshake_packet.__serialize__())
+                    # Generate shared key
+                    recv_pubk = load_pem_public_key(pkt.pk, backend=default_backend())
+                    self.shared_key = self.client_private_key.exchange(ec.ECDH(), recv_pubk)
+
+                    print("Client TLS Handshake complete")
+
+                    # Create hash 1, IVA, IVB
+                    digest1 = hashes.Hash(hashes.SHA256(), backend=default_backend())
+                    digest1.update(self.shared_key)
+                    hash1 = digest1.finalize()
+                    self.ivA = hash1[0:12]
+                    self.ivB = hash1[12:24]
+                    print("client iva:", self.ivA)
+                    print("client ivb:", self.ivB)
+
+                    # Create hash2, encA
+                    digest2 = hashes.Hash(hashes.SHA256(), backend=default_backend())
+                    digest2.update(hash1)
+                    hash2 = digest2.finalize()
+                    self.encA = hash2[0:16]
+                    print("client enc:", self.encA)
+
+                    # Create hash3, decA
+                    digest3 = hashes.Hash(hashes.SHA256(), backend=default_backend())
+                    digest3.update(hash2)
+                    hash3 = digest3.finalize()
+                    self.decA = hash3[0:16]
+                    print("client dec:", self.decA)
+
+                    self.higherProtocol().connection_made(self.crap_transport)
+
+            if pkt.DEFINITION_IDENTIFIER == "crap.datapacket":
+                if self._mode == "server":
+                    aesgcm = AESGCM(self.decB)
+                    try:
+                        decData = aesgcm.decrypt(self.ivA, pkt.data, None)
+
+                    except Exception as error:
+                        logger.debug("Server Decryption failed")
+
+                    self.ivA = (int.from_bytes(self.ivA, "big") + 1).to_bytes(12, "big")
+                    self.higherProtocol().data_received(decData)
+
+                if self._mode == "client":
+                    aesgcm = AESGCM(self.decA)
+                    try:
+                        decData = aesgcm.decrypt(self.ivB, pkt.data, None)
+
+                    except Exception as error:
+                        logger.debug("Client Decryption failed")
+
+                    self.ivB = (int.from_bytes(self.ivB, "big") + 1).to_bytes(12, "big")
+                    self.higherProtocol().data_received(decData)
+
+
+SecureClientFactory = StackingProtocolFactory.CreateFactoryType(lambda: POOP(mode="client"),lambda: CRAP(mode="client"))
+SecureServerFactory = StackingProtocolFactory.CreateFactoryType(lambda: POOP(mode="server"),lambda: CRAP(mode="server"))
+
