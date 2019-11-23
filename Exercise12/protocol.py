@@ -1,4 +1,3 @@
-
 from ..poop.protocol import POOP
 from uuid import UUID
 from playground.network.common import StackingProtocolFactory, StackingProtocol, StackingTransport
@@ -56,7 +55,13 @@ class DataPacket(CrapPacketType):
     DEFINITION_VERSION = "1.0"
     FIELDS = [
         ("data", BUFFER),
-        ("signature", BUFFER),
+    ]
+
+class ErrorPacket(CrapPacketType):
+    DEFINITION_IDENTIFIER = "crap.errorpacket"
+    DEFINITION_VERSION = "1.0"
+    FIELDS = [
+        ("message", STRING),
     ]
 
 class CRAPTransport(StackingTransport):
@@ -77,6 +82,7 @@ class CRAP(StackingProtocol):
         self.mode = mode
         self.deserializer = CrapPacketType.Deserializer()
         self.status_crap = None
+        self.privatekeyB = None
     def connection_made(self, transport):
         logger.debug("{} Crap: connection made".format(self.mode))
         self.transport = transport
@@ -128,7 +134,7 @@ class CRAP(StackingProtocol):
             x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, u"MarryLand"),
             x509.NameAttribute(NameOID.LOCALITY_NAME, u"Baltimore"),
             x509.NameAttribute(NameOID.ORGANIZATION_NAME, u"Team 5"),
-            x509.NameAttribute(NameOID.COMMON_NAME, u"Yu Mao"),
+            x509.NameAttribute(NameOID.COMMON_NAME, u"20194.5.5.5"),
             ])
             certificate = x509.CertificateBuilder().subject_name(
             subject
@@ -144,7 +150,7 @@ class CRAP(StackingProtocol):
             # Our certificate will be valid for 10 days
             datetime.datetime.utcnow() + datetime.timedelta(days=10)
             ).add_extension(
-            x509.SubjectAlternativeName([x509.DNSName(u"localhost")]),
+            x509.SubjectAlternativeName([x509.DNSName(u"20194.5.5.5")]),
             critical=False,
             # Sign our certificate with our private key
             ).sign(self.our_private_key_final, hashes.SHA256(), default_backend())
@@ -220,9 +226,10 @@ class CRAP(StackingProtocol):
                 self.transport.close()
             # Create Server long term key
             print("good")
-            privatekeyB = ec.generate_private_key(ec.SECP384R1(), default_backend())
-            pubkB = privatekeyB.public_key()
-
+            
+            self.privatekeyB = ec.generate_private_key(ec.SECP384R1(), default_backend())
+            pubkB = self.privatekeyB.public_key()
+            print("good2")
             # serialization
             tmp_pubkB = pubkB.public_bytes(Encoding.PEM, PublicFormat.SubjectPublicKeyInfo)
             self.datasentB = tmp_pubkB
@@ -231,7 +238,7 @@ class CRAP(StackingProtocol):
             self.signaturekB = rsa.generate_private_key(public_exponent=65537, key_size=2048, backend=default_backend())
             self.pubk_sign_B = self.signaturekB.public_key()
 
-
+            
 
             # Create signature
             sign_B = self.signaturekB.sign(self.datasentB,
@@ -248,16 +255,16 @@ class CRAP(StackingProtocol):
 
             # Generate shared key
             pubkB_recv = load_pem_public_key(packet.pk, backend=default_backend())
-            self.server_shared_key = privatekeyB.exchange(ec.ECDH, pubkB_recv)
+            self.server_shared_key = self.privatekeyB.exchange(ec.ECDH(), pubkB_recv)
 
-
+            print("generating ")
             # Create certificate with the help of ephemeral private key
             subject = issuer = x509.Name([
             x509.NameAttribute(NameOID.COUNTRY_NAME, u"CN"),
             x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, u"MarryLand"),
             x509.NameAttribute(NameOID.LOCALITY_NAME, u"Peskvile"),
             x509.NameAttribute(NameOID.ORGANIZATION_NAME, u"Team 5"),
-            x509.NameAttribute(NameOID.COMMON_NAME, u"Yu Mao"),
+            x509.NameAttribute(NameOID.COMMON_NAME, u"20194.5.5.5"),
             ])
             certificate = x509.CertificateBuilder().subject_name(
             subject
@@ -364,8 +371,10 @@ class CRAP(StackingProtocol):
 
             # Generate shared key
             pubkA_recv = load_pem_public_key(packet.pk, backend=default_backend())
-            client_shared_key = privatekeyB.exchange(ec.ECDH, pubkA_recv)
-
+            print(pubkA_recv)
+            print(self.privatekeyB)
+            client_shared_key = self.privatekeyB.exchange(ec.ECDH(), pubkA_recv)
+            
             # Reveive nonceB
             nonceB = str(packet.nonce).encode('ASCII')
 
