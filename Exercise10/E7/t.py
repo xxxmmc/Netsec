@@ -20,7 +20,7 @@ class EchoClient(asyncio.Protocol):
         self.loop.add_reader(sys.stdin, self.game_next_input)
         self.transport = transport
 
-        self.command_packet = create_game_init_packet("Bo")
+        self.command_packet = create_game_init_packet("YU Mao")
         self.transport.write(self.command_packet.__serialize__())
 
     def data_received(self, data):
@@ -42,7 +42,7 @@ class EchoClient(asyncio.Protocol):
                     self.i +=1
 
     async def Create_Payment(self, account, amount, unique_id):
-        result = await Payment_Init("bhui2_account", account, amount, unique_id)
+        result = await Payment_Init("ymao22", account, amount, unique_id)
         print(result)
 
         receipt, receipt_sig = result
@@ -62,12 +62,25 @@ class EchoClient(asyncio.Protocol):
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
-
-    coro = playground.create_connection(EchoClient, '20194.5.20.30', 21021)
-
+    #team2
+    destnationaddress = '20194.2.57.98'      
+    destinationport = '2222' 
+    #team3
+    #destinationaddress = '20194.3.6.9'      
+    #destinationport = '333' 
+    #team4
+    #destinationaddress = '20194.4.4.4'      
+    #destinationport = '8666' 
+    #team6
+    #destinationaddress = '20194.6.20.30'
+    #destinationport = '16666'
+    #team9
+    #destinationaddress = '20194.9.1.1'
+    #destinationport = '7826'
+    coro = playground.create_connection(EchoClient, 'crap://20194.4.4.4', 8666)
     loop.set_debug(enabled=True)
-    #from playground.common.logging import EnablePresetLogging, PRESET_DEBUG 
-    #EnablePresetLogging(PRESET_DEBUG)
+    from playground.common.logging import EnablePresetLogging, PRESET_DEBUG 
+    EnablePresetLogging(PRESET_DEBUG)
     loop.run_until_complete(coro)
     loop.run_forever()
     loop.close()

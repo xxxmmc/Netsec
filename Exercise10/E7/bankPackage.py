@@ -5,10 +5,10 @@ import playground, time
 import getpass, os, asyncio
 
 bankconfig = OnlineBankConfig()
-bank_addr = "20194.0.0.19000"
+bank_addr = "20194.0.1.1"
 bank_port = 888
 bank_stack = "default"
-bank_username = "bhui2"
+bank_username = "ymao22"
 certPath = "/home/student_20194/YU_MAO/live_fire_bank.cert"
 bank_cert = loadCertFromFile(certPath)
 
@@ -18,14 +18,14 @@ async def example_transfer(bank_client, src, dst, amount, memo):
         lambda: bank_client,
         bank_addr,
         bank_port,
-        family='default'
+        family='crap'
     )
     print("Connected. Logging in.")
 
     try:
         await bank_client.loginToServer()
     except Exception as e:
-        print("Login error. {}".format(e))
+
         return False
 
     try:

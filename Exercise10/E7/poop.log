@@ -1,0 +1,234 @@
+2019-12-07 21:03:17,581 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-07 21:03:17,583 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-07 21:03:17,742 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-07 21:03:17,743 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-07 21:03:17,885 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!
+2019-12-07 21:03:17,932 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:03:17,932 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:03:18,542 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 3262
+2019-12-07 21:03:18,544 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:03:18,603 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:03:18,605 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:03:18,653 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:03:18,655 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:03:18,670 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 216
+2019-12-07 21:03:18,672 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:03:41,372 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:03:41,373 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:03:42,751 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:03:42,752 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:03:46,139 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:03:46,140 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:03:46,145 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:03:46,147 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:03:48,862 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:03:48,863 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:03:51,302 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:03:51,303 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:03:52,953 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:03:52,954 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:04:17,605 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-07 21:04:17,606 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-07 21:04:17,826 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-07 21:04:17,827 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-07 21:04:17,943 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!
+2019-12-07 21:04:18,024 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:04:18,026 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:04:18,201 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 3262
+2019-12-07 21:04:18,203 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:04:18,317 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:04:18,319 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:04:18,437 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:04:18,441 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:04:18,445 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 216
+2019-12-07 21:04:18,447 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:05:45,476 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-07 21:05:45,480 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-07 21:05:46,211 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-07 21:05:46,213 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-07 21:05:46,435 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!
+2019-12-07 21:05:46,482 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:05:46,484 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:05:46,694 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 3262
+2019-12-07 21:05:46,695 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:05:46,736 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:05:46,737 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:05:46,763 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 266
+2019-12-07 21:05:46,765 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:05:46,769 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:06:05,105 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:06:05,107 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:06:06,212 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:06:06,213 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:06:26,009 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-07 21:06:26,010 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-07 21:06:26,237 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-07 21:06:26,237 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-07 21:06:26,404 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!
+2019-12-07 21:06:26,420 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:06:26,421 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:06:26,701 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 3262
+2019-12-07 21:06:26,703 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:06:26,736 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:06:26,738 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:06:26,769 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:06:26,772 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:06:26,776 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 216
+2019-12-07 21:06:26,778 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:07:58,068 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-07 21:07:58,070 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-07 21:07:58,147 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-07 21:07:58,148 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-07 21:07:58,516 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!
+2019-12-07 21:07:58,609 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:07:58,610 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:07:59,168 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 3262
+2019-12-07 21:07:59,169 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:07:59,216 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:07:59,218 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:07:59,257 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 266
+2019-12-07 21:07:59,259 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:07:59,263 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:08:03,758 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-07 21:08:03,762 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-07 21:08:03,861 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-07 21:08:03,863 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-07 21:08:04,092 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!
+2019-12-07 21:08:06,309 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 60
+2019-12-07 21:08:06,310 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:08:06,321 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 2112
+2019-12-07 21:08:06,327 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:08:06,335 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 1145
+2019-12-07 21:08:06,339 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:08:06,384 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 60
+2019-12-07 21:08:06,388 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:08:06,421 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 60
+2019-12-07 21:08:06,425 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:08:06,429 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 242
+2019-12-07 21:08:06,433 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:08:06,487 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 60
+2019-12-07 21:08:06,491 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-07 21:08:06,497 - __connector__connectors.poop.protocol - DEBUG - client passthrough connection lost. Shutting down higher layer.
+2019-12-07 21:08:11,255 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-07 21:08:11,257 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:27,911 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-08 12:13:27,912 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-08 12:13:27,978 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-08 12:13:27,978 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-08 12:13:28,175 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!
+2019-12-08 12:13:28,233 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 3272
+2019-12-08 12:13:28,234 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:28,235 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:28,281 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-08 12:13:28,282 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:28,337 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 304
+2019-12-08 12:13:28,339 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:28,340 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:33,361 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-08 12:13:33,365 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-08 12:13:33,456 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-08 12:13:33,461 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-08 12:13:33,590 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!
+2019-12-08 12:13:33,725 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 2172
+2019-12-08 12:13:33,729 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:33,736 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:33,744 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 1145
+2019-12-08 12:13:33,747 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:33,826 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 60
+2019-12-08 12:13:33,830 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:33,885 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 60
+2019-12-08 12:13:33,894 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:33,899 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 196
+2019-12-08 12:13:33,903 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:33,985 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 291
+2019-12-08 12:13:33,989 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:33,994 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:47,234 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-08 12:13:47,237 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-08 12:13:47,278 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-08 12:13:47,280 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-08 12:13:47,765 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!
+2019-12-08 12:13:47,827 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 3272
+2019-12-08 12:13:47,828 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:47,831 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:47,876 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-08 12:13:47,877 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:47,919 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 304
+2019-12-08 12:13:47,920 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:47,922 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:54,499 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-08 12:13:54,503 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-08 12:13:54,588 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-08 12:13:54,590 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-08 12:13:54,711 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!
+2019-12-08 12:13:54,845 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 60
+2019-12-08 12:13:54,853 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:54,857 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 3257
+2019-12-08 12:13:54,861 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:54,870 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:54,938 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 60
+2019-12-08 12:13:54,942 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:56,852 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 60
+2019-12-08 12:13:56,858 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:56,862 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 196
+2019-12-08 12:13:56,866 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:56,916 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 60
+2019-12-08 12:13:56,925 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:13:56,929 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 231
+2019-12-08 12:13:56,933 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:15:21,370 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-08 12:15:21,371 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-08 12:15:21,414 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-08 12:15:21,415 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-08 12:15:21,627 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!
+2019-12-08 12:15:21,824 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 3272
+2019-12-08 12:15:21,824 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:15:21,826 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:15:21,987 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-08 12:15:21,988 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:15:22,074 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-08 12:15:22,075 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:15:22,081 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 254
+2019-12-08 12:15:22,082 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:15:41,413 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-08 12:15:41,417 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-08 12:15:41,497 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-08 12:15:41,500 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-08 12:15:41,743 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!
+2019-12-08 12:15:41,994 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 60
+2019-12-08 12:15:41,999 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:15:42,073 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 2112
+2019-12-08 12:15:42,075 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:15:42,108 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 1145
+2019-12-08 12:15:42,109 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:18:31,951 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-08 12:18:31,952 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-08 12:18:32,009 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-08 12:18:32,010 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-08 12:18:32,086 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!
+2019-12-08 12:18:32,251 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 156
+2019-12-08 12:18:32,251 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:18:32,253 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:18:33,164 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 54
+2019-12-08 12:18:33,165 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.shutdownpacket
+2019-12-08 12:18:33,167 - __connector__connectors.poop.protocol - DEBUG - client passthrough connection lost. Shutting down higher layer.
+2019-12-08 12:22:22,406 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-08 12:22:22,407 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-08 12:22:22,461 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-08 12:22:22,462 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-08 12:22:22,553 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!
+2019-12-08 12:22:22,583 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-08 12:22:22,584 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:22:22,766 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 3262
+2019-12-08 12:22:22,766 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:22:22,975 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-08 12:22:22,977 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:22:23,077 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 50
+2019-12-08 12:22:23,079 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:22:23,086 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 216
+2019-12-08 12:22:23,087 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.datapacket
+2019-12-08 12:22:28,076 - __connector__connectors.poop.protocol - DEBUG - client POOP: init protocol
+2019-12-08 12:22:28,080 - __connector__connectors.poop.protocol - DEBUG - client POOP: connection made
+2019-12-08 12:22:28,175 - __connector__connectors.poop.protocol - DEBUG - client POOP recv a buffer of size 64
+2019-12-08 12:22:28,177 - __connector__connectors.poop.protocol - DEBUG - client POOP the pkt name is: poop.handshakepacket
+2019-12-08 12:22:28,417 - __connector__connectors.poop.protocol - DEBUG - client POOP: handshake success!

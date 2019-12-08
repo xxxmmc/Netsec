@@ -1,0 +1,59 @@
+2019-12-07 21:03:17,581 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-07 21:03:17,744 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-07 21:03:17,884 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
+2019-12-07 21:03:18,551 - __crap__.connectors.crap.protocol - DEBUG - ***client CRAP: Received a TLS handshakepacket***
+2019-12-07 21:04:17,604 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-07 21:04:17,830 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-07 21:04:17,942 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
+2019-12-07 21:04:18,207 - __crap__.connectors.crap.protocol - DEBUG - ***client CRAP: Received a TLS handshakepacket***
+2019-12-07 21:05:45,475 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-07 21:05:46,216 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-07 21:05:46,434 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
+2019-12-07 21:05:46,703 - __crap__.connectors.crap.protocol - DEBUG - ***client CRAP: Received a TLS handshakepacket***
+2019-12-07 21:06:26,008 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-07 21:06:26,238 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-07 21:06:26,403 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
+2019-12-07 21:06:26,710 - __crap__.connectors.crap.protocol - DEBUG - ***client CRAP: Received a TLS handshakepacket***
+2019-12-07 21:07:58,068 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-07 21:07:58,151 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-07 21:07:58,515 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
+2019-12-07 21:07:59,171 - __crap__.connectors.crap.protocol - DEBUG - ***client CRAP: Received a TLS handshakepacket***
+2019-12-07 21:08:03,757 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-07 21:08:03,868 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-07 21:08:04,090 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
+2019-12-07 21:08:06,344 - __crap__.connectors.crap.protocol - DEBUG - ***client CRAP: Received a TLS handshakepacket***
+2019-12-08 12:13:27,910 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-08 12:13:27,981 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-08 12:13:28,175 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
+2019-12-08 12:13:28,238 - __crap__.connectors.crap.protocol - DEBUG - ***client CRAP: Received a TLS handshakepacket***
+2019-12-08 12:13:33,360 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-08 12:13:33,466 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-08 12:13:33,588 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
+2019-12-08 12:13:33,753 - __crap__.connectors.crap.protocol - DEBUG - ***client CRAP: Received a TLS handshakepacket***
+2019-12-08 12:13:47,233 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-08 12:13:47,285 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-08 12:13:47,765 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
+2019-12-08 12:13:47,835 - __crap__.connectors.crap.protocol - DEBUG - ***client CRAP: Received a TLS handshakepacket***
+2019-12-08 12:13:54,498 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-08 12:13:54,595 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-08 12:13:54,710 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
+2019-12-08 12:13:54,876 - __crap__.connectors.crap.protocol - DEBUG - ***client CRAP: Received a TLS handshakepacket***
+2019-12-08 12:15:21,369 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-08 12:15:21,417 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-08 12:15:21,627 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
+2019-12-08 12:15:21,828 - __crap__.connectors.crap.protocol - DEBUG - ***client CRAP: Received a TLS handshakepacket***
+2019-12-08 12:15:41,412 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-08 12:15:41,505 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-08 12:15:41,743 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
+2019-12-08 12:15:42,111 - __crap__.connectors.crap.protocol - DEBUG - ***client CRAP: Received a TLS handshakepacket***
+2019-12-08 12:18:31,950 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-08 12:18:32,012 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-08 12:18:32,086 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
+2019-12-08 12:18:32,255 - __crap__.connectors.crap.protocol - DEBUG - ***client CRAP: Received a TLS handshakepacket***
+2019-12-08 12:22:22,405 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-08 12:22:22,465 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-08 12:22:22,553 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
+2019-12-08 12:22:22,769 - __crap__.connectors.crap.protocol - DEBUG - ***client CRAP: Received a TLS handshakepacket***
+2019-12-08 12:22:28,075 - __crap__.connectors.crap.protocol - DEBUG - ************client side crap __init__() **********
+2019-12-08 12:22:28,182 - __crap__.connectors.crap.protocol - DEBUG - client CRAP: connection made
+2019-12-08 12:22:28,416 - __crap__.connectors.crap.protocol - DEBUG - Client send TLS handshake!
